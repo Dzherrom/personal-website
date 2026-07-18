@@ -1,0 +1,23 @@
+.footer {
+  padding: 2rem;
+  text-align: center;
+  border-top: 1px solid #2a2a3a;
+  color: #a0a0b8;
+  font-size: 0.875rem;
+}
+
+.links {
+  display: flex;
+  gap: 1.5rem;
+  justify-content: center;
+  margin-bottom: 1rem;
+}
+
+.links a {
+  color: #e8e8f0;
+  text-decoration: none;
+
+  &:hover {
+    text-decoration: underline;
+  }
+}

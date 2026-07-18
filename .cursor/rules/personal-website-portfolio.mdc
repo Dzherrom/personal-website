@@ -1,0 +1,66 @@
+---
+description: Contexto, stack y convenciones del portfolio personal-page (DRF + React animado)
+alwaysApply: true
+---
+
+# Portfolio personal-page
+
+## Contexto del proyecto
+Estoy construyendo mi sitio web personal (portfolio) en el repositorio `personal-page`.
+Quiero replicar animaciones similares al portfolio de Anthony Rosman
+(https://portfolioanthonyrosman.netlify.app): intro letra por letra, typewriter,
+transiciones de página, scroll reveal y animaciones stagger en secciones.
+
+## Stack obligatorio
+- **Backend:** Django + Django REST Framework (API REST JSON)
+- **Frontend:** React (Vite) + TypeScript
+- **Animaciones:** Framer Motion + Typed.js
+- **Routing:** React Router DOM con AnimatePresence
+- **Estilos:** SASS modules (o Tailwind si ya está configurado)
+- **Base de datos:** PostgreSQL en producción, SQLite en desarrollo
+
+## Arquitectura
+- Monorepo o dos carpetas: `/backend` (Django) y `/frontend` (React)
+- El frontend consume la API REST de Django para contenido dinámico
+  (proyectos, skills, posts de blog, formulario de contacto)
+- Las animaciones son 100% responsabilidad del frontend; el backend solo entrega JSON
+- CORS configurado en Django para el origen del frontend
+
+## Secciones del sitio (en orden de desarrollo)
+1. **Intro/Splash** — pantalla inicial con animación letra por letra,
+   fondo con fade-in, typewriter de roles/profesión, botón "Empecemos"
+2. **Home/Hero** — presentación personal con stagger de textos y CTA
+3. **Proyectos** — grid de proyectos con scroll reveal (datos desde API)
+4. **Skills/Herramientas** — logos o badges animados al scroll
+5. **Contacto** — formulario que envía POST a DRF
+6. **Footer** — links sociales y copyright
+
+## Convenciones de código
+- Componentes funcionales con hooks
+- Animaciones con Framer Motion usando `initial`, `animate`, `transition`,
+  `whileInView` y `AnimatePresence`
+- Patrón stagger: mapear arrays de letras/textos con `delay: index * 0.02`
+- API calls con fetch o axios; tipos TypeScript para respuestas DRF
+- Serializers DRF para cada modelo; ViewSets con routers
+- Commits atómicos y mensajes en español o inglés según el repo
+
+## Reglas de animación (referencia Anthony Rosman)
+- Intro: cada letra → `initial={{ opacity: 0, translateY: 150 }}`
+  → `animate={{ opacity: 1, translateY: 0 }}` con delay escalonado
+- Descripción: spring desde izquierda → `translateX: -2000` → `0`
+- Typewriter: Typed.js con loop, `typeSpeed: 20`, `backSpeed: 20`
+- Secciones al scroll: `whileInView` con `viewport={{ once: true }}`
+- Transiciones de ruta: envolver `<Routes>` en `<AnimatePresence mode="wait">`
+
+## Lo que NO hacer
+- No usar Three.js ni WebGL salvo que lo pida explícitamente
+- No poner lógica de animación en Django
+- No hardcodear contenido que debería venir de la API
+- No sobre-ingenierizar: empezar simple, iterar
+
+## Cuando trabajes conmigo
+- Propón un plan antes de cambios grandes
+- Explica qué librería usar y por qué
+- Prioriza accesibilidad (`prefers-reduced-motion`) en animaciones
+- Mantén el sitio responsive (mobile-first)
+- Responde en español
