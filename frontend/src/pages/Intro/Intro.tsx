@@ -79,7 +79,9 @@ export function Intro() {
           }}
         >
           Soy un apasionado{" "}
-          <Typewriter strings={profile.typewriter_roles} />
+          <span className={styles.highlight}>
+            <Typewriter strings={profile.typewriter_roles} />
+          </span>
         </motion.p>
 
         <motion.div className={styles.ctaWrapper}

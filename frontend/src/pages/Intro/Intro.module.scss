@@ -1,19 +1,34 @@
 .splash {
   position: relative;
+  width: 100%;
   min-height: 100dvh;
+  height: 100dvh;
   display: flex;
   flex-direction: column;
+  justify-content: center;
   align-items: flex-start;
   text-align: left;
-  padding: 2rem 4rem;
+  padding: 0 8vw;
   overflow: hidden;
+}
+.content{
+  position: relative;
+  z-index: 1;
+  width: 100%;
+  max-width: 75%;
+  display: flex;
+  flex-direction: column;
+gap:0.25rem;
 }
 
 .ctaWrapper {
+  position: absolute;
+  bottom: 6vh;
+  left: 0;
+  right: 0;
   display: flex;
   justify-content: center;
   width: 100%;
-  margin-top: 4rem;
 }
 
 .background {
@@ -33,7 +48,7 @@
 
 .greeting {
   display: block;
-  font-size: clamp(1.5rem, 4vw, 2.5rem);
+  font-size: clamp(3rem, 11vw, 9rem);
   font-weight: 700;
   letter-spacing: 0.15em;
   color: #e8e8f0;
@@ -42,7 +57,7 @@
 
 .name {
   display: block;
-  font-size: clamp(2rem, 6vw, 4rem);
+  font-size: clamp(3.5rem, 13vw, 8.5rem);
   font-weight: 800;
   letter-spacing: 0.08em;
   color: #ffffff;
@@ -51,20 +66,29 @@
 
 .description {
   font-size: clamp(1rem, 2.5vw, 1.25rem);
-  color: #a0a0b8;
-  margin-bottom: 3rem;
+  font-weight: 500;
+  color: #ffffff;
+  line-height: 1.35;
+  max-width: 90%;
   min-height: 1.5em;
+  margin-bottom: 0;
 }
+
+.highlight {
+  color: #e63946;
+  font-weight: 700;
+}
+
 
 .cta {
   display: inline-block;
-  padding: 0.875rem 2.5rem;
-  font-size: 1rem;
-  font-weight: 600;
-  color: #0f0f1a;
-  background: #e8e8f0;
-  border: none;
-  border-radius: 999px;
+  padding: 0.75rem 2rem;
+  font-size: clamp(1rem, 2vw, 1.35rem);
+  font-weight: 700;
+  color: #111111;
+  background: #ffffff;
+  border: 2px solid #e63946;
+  border-radius: 4px;
   cursor: pointer;
   text-decoration: none;
   transition: transform 0.2s, background 0.2s;
