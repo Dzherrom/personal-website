@@ -1,0 +1,47 @@
+.sidebar {
+  position: fixed;
+  left: 2rem;
+  bottom: 0;
+  z-index: 10;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 1.25rem;
+  padding-bottom: 0;
+}
+
+.iconList {
+  list-style: none;
+  display: flex;
+  flex-direction: column;
+  gap: 1.25rem;
+  margin: 0;
+  padding: 0;
+}
+
+.iconLink {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: #a0a0b8;
+  text-decoration: none;
+  transition: transform 0.25s, color 0.25s;
+
+  &:hover {
+    transform: translateY(-4px) scale(1.1);
+    color: #e63946;
+  }
+}
+
+.line {
+  width: 1px;
+  height: 120px;
+  background: #a0a0b8;
+  margin-top: 0.5rem;
+}
+
+@media (max-width: 768px) {
+  .sidebar {
+    display: none;
+  }
+}

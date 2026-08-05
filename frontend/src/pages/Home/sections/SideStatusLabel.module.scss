@@ -1,0 +1,38 @@
+.sidebar {
+  position: fixed;
+  right: 2rem;
+  bottom: 0;
+  z-index: 10;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 1rem;
+}
+
+.rotatedText {
+  display: inline-block;
+  writing-mode: vertical-rl;
+  transform: rotate(180deg);
+  font-size: 0.75rem;
+  letter-spacing: 0.15em;
+  color: #a0a0b8;
+  text-decoration: none;
+  transition: transform 0.25s, color 0.25s;
+
+  &:hover {
+    color: #e63946;
+    transform: rotate(180deg) translateY(-4px) scale(1.1);
+  }
+}
+
+.line {
+  width: 1px;
+  height: 120px;
+  background: #a0a0b8;
+}
+
+@media (max-width: 768px) {
+  .sidebar {
+    display: none;
+  }
+}
