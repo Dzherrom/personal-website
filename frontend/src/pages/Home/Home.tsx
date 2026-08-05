@@ -6,6 +6,7 @@ import { ContactSection } from "./sections/ContactSection";
 import { ExperienceSection } from "./sections/ExperienceSection";
 import { HeroSection } from "./sections/HeroSection";
 import { ProjectsSection } from "./sections/ProjectsSection";
+import { HomeNavBar } from "./sections/HomeNavBar";
 import { SideSocialNav } from "./sections/SideSocialNav";
 import { SideStatusLabel } from "./sections/SideStatusLabel";
 import { SkillsSection } from "./sections/SkillsSection";
@@ -42,6 +43,7 @@ export function Home() {
 
   return (
     <main className={styles.page}>
+      <HomeNavBar />
       <SideSocialNav profile={profile} />
       <SideStatusLabel text="Sitio desactualizado, nuevo en construcción" />
       <HeroSection profile={profile} />

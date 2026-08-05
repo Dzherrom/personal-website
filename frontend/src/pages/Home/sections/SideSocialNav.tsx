@@ -18,10 +18,10 @@ const ICONS: Array<{
   urlKey?: keyof SiteProfile;
   url?: string;
 }> = [
-  { id: "github", urlKey: "github_url", label: "GitHub" },
-  { id: "linkedin", urlKey: "linkedin_url", label: "LinkedIn" },
+  { id: "github", url: "https://github.com/Dzherrom/", label: "GitHub" },
+  { id: "linkedin", url: "https://www.linkedin.com/in/dzherrom/", label: "LinkedIn" },
   { id: "freelancer", url: "https://www.freelancer.com", label: "Freelancer" },
-  { id: "codewars", url: "https://www.codewars.com", label: "Codewars" },
+  { id: "codewars", url: "https://www.codewars.com/users/dzherrom99", label: "Codewars" },
 ];
 
 export function SideSocialNav({ profile }: { profile: SiteProfile }) {
@@ -54,7 +54,7 @@ export function SideSocialNav({ profile }: { profile: SiteProfile }) {
                 className={styles.iconLink}
                 aria-label={link.label}
               >
-                {Icon ? <Icon size={22} /> : link.label[0]}
+                {Icon ? <Icon size={32} /> : link.label[0]}
               </a>
             </motion.li>
           );
