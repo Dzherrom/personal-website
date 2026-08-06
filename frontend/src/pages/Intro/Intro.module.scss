@@ -26,7 +26,6 @@
 }
 
 .ctaWrapper {
-  position: fixed;
   left: 0;
   right: 0;
   bottom: 8vh;
@@ -35,6 +34,7 @@
   justify-content: center;
   width: 100%;
   pointer-events: none;
+  margin-top: 10vh;
 
   a {
     pointer-events: auto;
