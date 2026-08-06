@@ -14,6 +14,7 @@
 }
 
 .content {
+  container-type: inline-size;
   position: relative;
   z-index: 1;
   width: 100%;
@@ -56,10 +57,10 @@
 }
 
 .greeting {
-  display: block;
   width: 100%;
   overflow: visible;
-  font-size: clamp(1.85rem, 10vw, 9rem);
+  /* ~9 caracteres × ~0.55em → llena el ancho del contenedor sin distorsionar letras */
+  font-size: clamp(1.85rem, calc(100cqw / 4.95), 7rem);
   font-weight: 700;
   letter-spacing: 0;
   color: #e8e8f0;
@@ -70,7 +71,8 @@
 .name {
   width: 100%;
   overflow: visible;
-  font-size: clamp(1.75rem, 8vw, 8.5rem);
+  /* Divisor menor = tipografía más grande; ~22% mayor que el greeting */
+  font-size: clamp(1.75rem, calc(100cqw / 4.05), 9rem);
   font-weight: 800;
   letter-spacing: 0.02em;
   color: #ffffff;
@@ -82,7 +84,7 @@
 }
 
 .description {
-  font-size: clamp(2rem, 2.5vw, 1.25rem);
+  font-size: clamp(3rem, 2.5vw, 1.2rem);
   font-weight: 500;
   color: #ffffff;
   line-height: 1.4;
@@ -140,13 +142,13 @@
   }
 
   .name {
-    font-size: clamp(1.75rem, 6vw, 4rem);
+    font-size: clamp(1.75rem, calc(100cqw / 4.05), 4rem);
     letter-spacing: 0.01em;
     padding-right: 0.45em;
   }
 
   .greeting {
-    font-size: clamp(1.75rem, 8vw, 6rem);
+    font-size: clamp(1.75rem, calc(100cqw / 4.95), 6rem);
   }
 
   .background {
@@ -165,13 +167,13 @@
   }
 
   .name {
-    font-size: clamp(1.65rem, 7.8vw, 2.85rem);
     letter-spacing: 0.005em;
     padding-right: 0.4em;
+    font-size: clamp(1.65rem, calc(100cqw / 4.05), 2.85rem);
   }
 
   .greeting {
-    font-size: clamp(1.6rem, 8.5vw, 3rem);
+    font-size: clamp(1.6rem, calc(100cqw / 4.95), 3rem);
   }
 
   .background {
