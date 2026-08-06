@@ -2,85 +2,91 @@
   position: relative;
   width: 100%;
   min-height: 100dvh;
-  height: 100dvh;
   display: flex;
   flex-direction: column;
   justify-content: flex-start;
   align-items: flex-start;
   text-align: left;
-  padding: 10vh 8vw 0 8vw;
-  overflow: hidden;
-  font-family: 'Oswald', 'Arial Narrow', 'Impact', sans-serif;
+  padding: 10vh max(1.25rem, 6vw) 0;
+  /* Sin overflow-y: auto — en CSS fuerza overflow-x a auto y recorta el final del nombre */
+  overflow: visible;
+  font-family: "Oswald", "Arial Narrow", "Impact", sans-serif;
 }
 
-.content{
+.content {
   position: relative;
   z-index: 1;
   width: 100%;
-  max-width: 75%;
+  max-width: 100%;
   display: flex;
-  margin-top: 5vh;
   flex-direction: column;
+  margin-top: 5vh;
+  overflow: visible;
+  box-sizing: border-box;
 }
 
 .ctaWrapper {
   position: fixed;
   left: 0;
   right: 0;
+  bottom: 8vh;
+  z-index: 2;
   display: flex;
   justify-content: center;
-  bottom: 8vh;
   width: 100%;
+  pointer-events: none;
+
+  a {
+    pointer-events: auto;
+  }
 }
 
 .background {
-  position: absolute;
+  position: fixed;
   inset: 0;
   z-index: 0;
   background:
     linear-gradient(
       to right,
-      rgba(5, 5, 12, 0.85) 20%,
-      rgba(5, 5, 1, 0.3) 50%,
-      rgba(5, 5, 12, 0.2) 40%,
-      rgba(5, 5, 12, 0.8) 100%
+      rgba(5, 5, 12, 0.85) 0%,
+      rgba(5, 5, 12, 0.55) 45%,
+      rgba(5, 5, 12, 0.35) 100%
     ),
     url("/images/intro-bg.png") 75% center / cover no-repeat;
 }
 
-.content {
-  position: relative;
-  z-index: 1;
-  max-width: 100%;
-  width: 100%;
-  text-align: left;
-}
-
 .greeting {
   display: block;
-  font-size: clamp(11rem, 11vw, 9rem);
+  width: 100%;
+  overflow: visible;
+  font-size: clamp(1.85rem, 10vw, 9rem);
   font-weight: 700;
-  letter-spacing: 0em;
+  letter-spacing: 0;
   color: #e8e8f0;
-  margin-bottom: 0.0;
-  line-height: 0.85;
+  margin-bottom: 0;
+  line-height: 0.95;
 }
 
 .name {
-  display: block;
-  font-size: clamp(9rem, 13vw, 8.5rem);
+  width: 100%;
+  overflow: visible;
+  font-size: clamp(1.75rem, 8vw, 8.5rem);
   font-weight: 800;
-  letter-spacing: 0.08em;
+  letter-spacing: 0.02em;
   color: #ffffff;
-  margin-bottom: 2rem;
+  margin-bottom: 1.5rem;
+  line-height: 1.1;
+  /* Margen extra para glifos > y / que sobresalen del bbox */
+  padding-right: 0.5em;
+  box-sizing: border-box;
 }
 
 .description {
   font-size: clamp(2rem, 2.5vw, 1.25rem);
   font-weight: 500;
   color: #ffffff;
-  line-height: 1.35;
-  max-width: 90%;
+  line-height: 1.4;
+  max-width: 100%;
   min-height: 1.5em;
   margin-bottom: 0;
 }
@@ -90,14 +96,12 @@
   font-weight: 700;
 }
 
-
 .cta {
   display: inline-flex;
   align-items: center;
   justify-content: center;
-  text-align: center;
-  padding: 0.75rem 2rem;
-  font-size: clamp(1rem, 2vw, 1.35rem);
+  padding: 0.875rem 2.25rem;
+  font-size: clamp(1.05rem, 2.5vw, 1.35rem);
   font-weight: 700;
   color: #111111;
   background: #ffffff;
@@ -105,6 +109,7 @@
   border-radius: 99px;
   cursor: pointer;
   text-decoration: none;
+  white-space: nowrap;
   transition: transform 0.2s, background 0.2s;
 
   &:hover {
@@ -121,4 +126,71 @@
 .loading {
   color: #a0a0b8;
   font-size: 1.1rem;
+}
+
+/* Tablet (~820px) */
+@media (max-width: 1024px) {
+  .splash {
+    padding: 8vh max(1.25rem, 5vw) 0;
+  }
+
+  .content {
+    max-width: 100%;
+    padding-bottom: 20vh;
+  }
+
+  .name {
+    font-size: clamp(1.75rem, 6vw, 4rem);
+    letter-spacing: 0.01em;
+    padding-right: 0.45em;
+  }
+
+  .greeting {
+    font-size: clamp(1.75rem, 8vw, 6rem);
+  }
+
+  .background {
+    background-position: center center;
+  }
+}
+
+/* Móvil (~414px) */
+@media (max-width: 768px) {
+  .splash {
+    padding: 7vh 1.25rem 0;
+  }
+
+  .content {
+    padding-bottom: 22vh;
+  }
+
+  .name {
+    font-size: clamp(1.65rem, 7.8vw, 2.85rem);
+    letter-spacing: 0.005em;
+    padding-right: 0.4em;
+  }
+
+  .greeting {
+    font-size: clamp(1.6rem, 8.5vw, 3rem);
+  }
+
+  .background {
+    background:
+      linear-gradient(
+        to bottom,
+        rgba(5, 5, 12, 0.9) 0%,
+        rgba(5, 5, 12, 0.75) 100%
+      ),
+      url("/images/intro-bg.png") center / cover no-repeat;
+  }
+
+  .ctaWrapper {
+    bottom: 7vh;
+  }
+}
+
+@media (max-width: 480px) {
+  .content {
+    padding-bottom: 24vh;
+  }
 }

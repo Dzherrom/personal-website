@@ -65,6 +65,7 @@ export function Intro() {
           text={profile.intro_name}
           className={styles.name}
           delayOffset={greetingDelay}
+          wrapAtSpaces
         />
 
         <motion.p
