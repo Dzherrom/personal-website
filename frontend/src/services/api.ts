@@ -9,6 +9,29 @@ import type {
 
 const API_BASE = import.meta.env.VITE_API_URL ?? "/api";
 
+/** Convierte URLs de archivos del API a ruta local proxied (/media/...) en desarrollo. */
+export function getMediaUrl(fileUrl: string): string {
+  if (!fileUrl) return "";
+
+  try {
+    const { pathname } = new URL(fileUrl);
+    if (pathname.startsWith("/media/")) {
+      return pathname;
+    }
+  } catch {
+    if (fileUrl.startsWith("/media/")) {
+      return fileUrl;
+    }
+  }
+
+  return fileUrl;
+}
+
+/** @deprecated Usa getMediaUrl */
+export function getCvDownloadUrl(cvFile: string): string {
+  return getMediaUrl(cvFile);
+}
+
 async function fetchJson<T>(path: string, options?: RequestInit): Promise<T> {
   const response = await fetch(`${API_BASE}${path}`, {
     headers: { "Content-Type": "application/json", ...options?.headers },

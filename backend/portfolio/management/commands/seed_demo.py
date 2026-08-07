@@ -1,6 +1,10 @@
+from django.core.files import File
 from django.core.management.base import BaseCommand
+from pathlib import Path
 
 from portfolio.models import Client, Project, SiteProfile, Skill
+
+SEED_ASSETS = Path(__file__).resolve().parent.parent.parent / "seed_assets"
 
 
 class Command(BaseCommand):
@@ -20,7 +24,6 @@ class Command(BaseCommand):
                 "email": "tu@email.com",
                 "github_url": "https://github.com",
                 "linkedin_url": "https://linkedin.com",
-                "cv_url": "",
                 "whatsapp_number": "521234567890",
                 "social_links": [
                     {"label": "GitHub", "url": "https://github.com"},
@@ -49,19 +52,39 @@ class Command(BaseCommand):
             )
         )
 
-        clients_data = [
-            ("Empresa Alpha", "https://github.com", 1),
-            ("Startup Beta", "https://linkedin.com", 2),
-            ("Agencia Gamma", "https://github.com", 3),
-        ]
+        Client.objects.filter(
+            name__in=["Empresa Alpha", "Startup Beta", "Agencia Gamma"]
+        ).delete()
 
-        for name, url, order in clients_data:
-            client, created = Client.objects.update_or_create(
-                name=name,
-                defaults={"website_url": url, "order": order},
-            )
-            action = "creado" if created else "actualizado"
-            self.stdout.write(self.style.SUCCESS(f"Cliente {action}: {client.name}"))
+        client, created = Client.objects.update_or_create(
+            name="TaskUp",
+            defaults={
+                "description": (
+                    "Landing page para TaskUp, plataforma de asistentes virtuales. "
+                    "Diseño moderno con hero, navegación y CTAs orientados a conversión."
+                ),
+                "highlights": [
+                    "Hero con mensaje principal y llamadas a la acción",
+                    "Navegación responsive con secciones de pricing y contacto",
+                    "Diseño visual alineado con la identidad de la marca",
+                ],
+                "tech_stack": ["React", "TypeScript", "CSS"],
+                "website_url": "https://www.hiretaskup.com",
+                "logo_url": "",
+                "order": 1,
+            },
+        )
+
+        preview_path = SEED_ASSETS / "taskup-preview.png"
+        if preview_path.exists():
+            with preview_path.open("rb") as preview_file:
+                client.preview_image.save(
+                    "taskup-preview.png",
+                    File(preview_file),
+                    save=True,
+                )
+        action = "creado" if created else "actualizado"
+        self.stdout.write(self.style.SUCCESS(f"Cliente {action}: {client.name}"))
 
         projects_data = [
             {

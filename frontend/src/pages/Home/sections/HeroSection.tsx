@@ -1,7 +1,7 @@
 import { ScrollReveal } from "../../../components/animations/ScrollReveal";
+import { getCvDownloadUrl } from "../../../services/api";
 import type { SiteProfile } from "../../../types/api";
 import styles from "../Home.module.scss";
-
 interface HeroSectionProps {
   profile: SiteProfile;
 }
@@ -27,9 +27,13 @@ export function HeroSection({ profile }: HeroSectionProps) {
         <p className={styles.heroBio}>{profile.bio}</p>
       </ScrollReveal>
 
-      {profile.cv_url && (
+      {profile.cv_file && (
         <ScrollReveal onMount delay={0.6}>
-          <a className={styles.cvButton} href={profile.cv_url} target="_blank" rel="noreferrer">
+          <a
+            className={styles.cvButton}
+            href={getCvDownloadUrl(profile.cv_file)}
+            download
+          >
             Descargar CV
           </a>
         </ScrollReveal>

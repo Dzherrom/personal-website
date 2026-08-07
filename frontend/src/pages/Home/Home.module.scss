@@ -134,47 +134,6 @@
   font-style: italic;
 }
 
-/* ── Experiencia / Clientes ── */
-.clientGrid {
-  list-style: none;
-  display: grid;
-  grid-template-columns: repeat(auto-fill, minmax(140px, 1fr));
-  gap: 1.5rem;
-  max-width: 800px;
-  margin: 0 auto;
-}
-
-.clientCard {
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  min-height: 100px;
-  padding: 1.25rem;
-  background: #12121c;
-  border: 1px solid #2a2a3a;
-  border-radius: 12px;
-  text-decoration: none;
-  transition: border-color 0.2s, transform 0.2s;
-
-  img {
-    max-height: 48px;
-    max-width: 100%;
-    object-fit: contain;
-  }
-
-  &:hover {
-    border-color: #e8e8f0;
-    transform: translateY(-4px);
-  }
-}
-
-.clientName {
-  color: #c0c0d0;
-  font-weight: 600;
-  text-align: center;
-  font-size: 0.9rem;
-}
-
 /* ── Skills ── */
 .skillsGrid {
   list-style: none;
@@ -214,7 +173,7 @@
   }
 }
 
-/* ── Proyectos ── */
+/* ── Proyectos (y tarjetas de clientes) ── */
 .projectsList {
   display: flex;
   flex-direction: column;
@@ -230,6 +189,41 @@
 
   &:hover {
     border-color: #505068;
+  }
+}
+
+.projectCardWithPreview {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) minmax(220px, 42%);
+  gap: 2rem;
+  align-items: center;
+}
+
+.projectCardContent {
+  min-width: 0;
+}
+
+.projectCardPreview {
+  min-width: 0;
+
+  img {
+    display: block;
+    width: 100%;
+    height: auto;
+    border-radius: 10px;
+    border: 1px solid #2a2a3a;
+    object-fit: cover;
+    box-shadow: 0 12px 32px rgba(0, 0, 0, 0.35);
+  }
+}
+
+@media (max-width: 768px) {
+  .projectCardWithPreview {
+    grid-template-columns: 1fr;
+  }
+
+  .projectCardPreview {
+    order: -1;
   }
 }
 

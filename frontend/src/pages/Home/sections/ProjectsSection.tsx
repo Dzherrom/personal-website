@@ -12,7 +12,7 @@ export function ProjectsSection({ projects }: ProjectsSectionProps) {
   return (
     <section className={styles.section} id="proyectos">
       <ScrollReveal>
-        <h2 className={styles.sectionTitle}>Alguno proyectos que he desarrollado</h2>
+        <h2 className={styles.sectionTitle}>Algunos proyectos que he desarrollado</h2>
       </ScrollReveal>
 
       <div className={styles.projectsList}>

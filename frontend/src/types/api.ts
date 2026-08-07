@@ -12,7 +12,7 @@ export interface SiteProfile {
   email: string;
   github_url: string;
   linkedin_url: string;
-  cv_url: string;
+  cv_file: string;
   whatsapp_number: string;
   social_links: SocialLink[];
   skills_note: string;
@@ -26,7 +26,11 @@ export interface SiteProfile {
 export interface Client {
   id: number;
   name: string;
+  description: string;
+  highlights: string[];
+  tech_stack: string[];
   logo_url: string;
+  preview_image: string;
   website_url: string;
   order: number;
 }

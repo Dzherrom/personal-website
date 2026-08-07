@@ -16,7 +16,7 @@ const FALLBACK_PROFILE: SiteProfile = {
   email: "",
   github_url: "",
   linkedin_url: "",
-  cv_url: "",
+  cv_file: "",
   whatsapp_number: "",
   social_links: [],
   skills_note: "",

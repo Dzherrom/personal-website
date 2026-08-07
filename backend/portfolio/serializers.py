@@ -4,6 +4,8 @@ from .models import Client, ContactMessage, Project, SiteProfile, Skill
 
 
 class SiteProfileSerializer(serializers.ModelSerializer):
+    cv_file = serializers.SerializerMethodField()
+
     class Meta:
         model = SiteProfile
         fields = [
@@ -15,7 +17,7 @@ class SiteProfileSerializer(serializers.ModelSerializer):
             "email",
             "github_url",
             "linkedin_url",
-            "cv_url",
+            "cv_file",
             "whatsapp_number",
             "social_links",
             "skills_note",
@@ -26,11 +28,41 @@ class SiteProfileSerializer(serializers.ModelSerializer):
             "typewriter_roles",
         ]
 
+    def get_cv_file(self, obj: SiteProfile) -> str:
+        if not obj.cv_file:
+            return ""
+        request = self.context.get("request")
+        url = obj.cv_file.url
+        if request is not None:
+            return request.build_absolute_uri(url)
+        return url
+
 
 class ClientSerializer(serializers.ModelSerializer):
+    preview_image = serializers.SerializerMethodField()
+
     class Meta:
         model = Client
-        fields = ["id", "name", "logo_url", "website_url", "order"]
+        fields = [
+            "id",
+            "name",
+            "description",
+            "highlights",
+            "tech_stack",
+            "logo_url",
+            "preview_image",
+            "website_url",
+            "order",
+        ]
+
+    def get_preview_image(self, obj: Client) -> str:
+        if not obj.preview_image:
+            return ""
+        request = self.context.get("request")
+        url = obj.preview_image.url
+        if request is not None:
+            return request.build_absolute_uri(url)
+        return url
 
 
 class ProjectSerializer(serializers.ModelSerializer):

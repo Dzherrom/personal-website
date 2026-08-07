@@ -1,3 +1,4 @@
+from django.core.validators import FileExtensionValidator
 from django.db import models
 
 
@@ -11,7 +12,12 @@ class SiteProfile(models.Model):
     email = models.EmailField(blank=True)
     github_url = models.URLField(blank=True)
     linkedin_url = models.URLField(blank=True)
-    cv_url = models.URLField(blank=True, help_text="Enlace al CV en PDF")
+    cv_file = models.FileField(
+        upload_to="cvs/",
+        blank=True,
+        validators=[FileExtensionValidator(allowed_extensions=["pdf"])],
+        help_text="CV en PDF. Se muestra como botón de descarga en el home.",
+    )
     whatsapp_number = models.CharField(
         max_length=20,
         blank=True,
@@ -59,11 +65,30 @@ class SiteProfile(models.Model):
 
 
 class Client(models.Model):
-    """Empresas o clientes con los que se ha trabajado."""
+    """Proyectos o experiencias realizados para clientes."""
 
-    name = models.CharField(max_length=120)
+    name = models.CharField(max_length=120, help_text="Nombre del cliente o del proyecto")
+    description = models.TextField(blank=True)
+    highlights = models.JSONField(
+        default=list,
+        blank=True,
+        help_text='Lista de logros: ["Feature 1", "Feature 2"]',
+    )
+    tech_stack = models.JSONField(
+        default=list,
+        blank=True,
+        help_text='["React", "Django"]',
+    )
     logo_url = models.URLField(blank=True)
-    website_url = models.URLField(blank=True)
+    preview_image = models.FileField(
+        upload_to="clients/previews/",
+        blank=True,
+        validators=[
+            FileExtensionValidator(allowed_extensions=["jpg", "jpeg", "png", "webp"])
+        ],
+        help_text="Captura o preview del proyecto. Se muestra a la derecha en la tarjeta.",
+    )
+    website_url = models.URLField(blank=True, help_text="Enlace al sitio del cliente")
     order = models.PositiveIntegerField(default=0)
 
     class Meta:
