@@ -128,13 +128,23 @@ class Command(BaseCommand):
             self.stdout.write(self.style.SUCCESS(f"Proyecto {action}: {project.title}"))
 
         skills_data = [
-            ("React", "Frontend", 1),
-            ("TypeScript", "Frontend", 2),
-            ("Django", "Backend", 3),
-            ("Python", "Backend", 4),
-            ("PostgreSQL", "Database", 5),
-            ("Framer Motion", "Animación", 6),
-            ("SASS", "Estilos", 7),
+            ("JavaScript", "Frontend", 1),
+            ("React", "Frontend", 2),
+            ("Next.js", "Frontend", 3),
+            ("Tailwind", "Frontend", 4),
+            ("Python", "Backend", 5),
+            ("Django", "Backend", 6),
+            ("Django REST", "Backend", 7),
+            ("PostgreSQL", "Database", 8),
+            ("MySQL", "Database", 9),
+            ("Ruby", "Backend", 10),
+            ("Ruby on Rails", "Backend", 11),
+            ("NPM", "Herramientas", 12),
+            ("VS Code", "Herramientas", 13),
+            ("Fly.io", "Deploy", 14),
+            ("Hostinger", "Deploy", 15),
+            ("Netlify", "Deploy", 16),
+            ("Vercel", "Deploy", 17),
         ]
 
         for name, category, order in skills_data:

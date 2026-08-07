@@ -203,7 +203,7 @@
   min-width: 0;
 }
 
-.projectCardPreview {
+.projectCardPreview { 
   min-width: 0;
 
   img {
@@ -345,4 +345,76 @@
   color: #505068;
   font-size: 0.85rem;
   padding-bottom: 2rem;
+}
+
+.skillsGrid {
+  list-style: none;
+  display: grid;
+  grid-template-columns: repeat(5, 1fr);
+  gap: 1.25rem;
+  max-width: 620px; /* 5 × ~100px + gaps */
+  margin: 0 auto;
+}
+
+.skillItem {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 100%;
+  aspect-ratio: 1 / 1;
+  background: #ffffff;
+  border-radius: 6px;
+  padding: 1rem;
+  transition: transform 0.2s, box-shadow 0.2s;
+
+  img {
+    width: 48px;
+    height: 48px;
+    object-fit: contain;
+  }
+
+  &:hover {
+    transform: translateY(-4px);
+    box-shadow: 0 8px 24px rgba(0, 0, 0, 0.25);
+  }
+}
+
+.skillIcon {
+  width: 48px;
+  height: 48px;
+}
+
+.skillIconWrapper {
+  position: relative;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.skillBadge {
+  position: absolute;
+  bottom: -4px;
+  right: -8px;
+  background: #0C4B33;
+  color: #ffffff;
+  font-size: 0.5rem;
+  font-weight: 700;
+  padding: 1px 4px;
+  border-radius: 3px;
+  line-height: 1;
+  letter-spacing: 0.02em;
+}
+
+@media (max-width: 768px) {
+  .skillsGrid {
+    grid-template-columns: repeat(3, 1fr);
+    max-width: 360px;
+  }
+}
+
+@media (max-width: 480px) {
+  .skillsGrid {
+    grid-template-columns: repeat(2, 1fr);
+    max-width: 240px;
+  }
 }
