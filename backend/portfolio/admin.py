@@ -79,6 +79,21 @@ class ProjectAdmin(admin.ModelAdmin):
     list_display = ("title", "slug", "order", "is_featured", "created_at")
     list_filter = ("is_featured",)
     prepopulated_fields = {"slug": ("title",)}
+    readonly_fields = ("created_at",)
+    fieldsets = (
+        (
+            "Proyecto",
+            {
+                "fields": ("title", "slug", "description", "highlights", "preview_image", "order", "is_featured", "created_at"),
+            },
+        ),
+        (
+            "Enlaces",
+            {
+                "fields": ("demo_url", "repo_url", "tech_stack"),
+            },
+        ),
+    )
 
 
 @admin.register(Skill)

@@ -109,7 +109,14 @@ class Project(models.Model):
         blank=True,
         help_text='Lista de logros: ["Feature 1", "Feature 2"]',
     )
-    image_url = models.URLField(blank=True)
+    preview_image = models.FileField(
+        upload_to="projects/previews/",
+        blank=True,
+        validators=[
+            FileExtensionValidator(allowed_extensions=["jpg", "jpeg", "png", "webp"])
+        ],
+        help_text="Captura o preview del proyecto. Se muestra en la tarjeta.",
+    )
     demo_url = models.URLField(blank=True)
     repo_url = models.URLField(blank=True)
     tech_stack = models.JSONField(default=list, help_text='["React", "Django"]')

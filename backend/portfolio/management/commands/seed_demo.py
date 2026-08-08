@@ -91,31 +91,52 @@ class Command(BaseCommand):
                 "title": "Portfolio Personal",
                 "slug": "portfolio-personal",
                 "description": (
-                    "Mi portafolio usando React y Django REST para manejar el contenido dinámico."
+                    "Sitio web personal con contenido dinámico desde Django REST, "
+                    "animaciones con Framer Motion y diseño responsive."
                 ),
                 "highlights": [
-                    "Diseño y construcción con animaciones Framer Motion",
-                    "API REST con Django para proyectos, skills y contacto",
-                    "Scroll reveal en cada sección del home",
+                    "Animaciones letra por letra y scroll reveal",
+                    "API REST para perfil, proyectos, skills y contacto",
+                    "Panel de administración para gestionar contenido",
                 ],
-                "tech_stack": ["React", "TypeScript", "Django", "Framer Motion"],
+                "tech_stack": ["React", "TypeScript", "Django", "Framer Motion", "SASS"],
                 "demo_url": "",
-                "repo_url": "https://github.com",
+                "repo_url": "https://github.com/Dzherrom/personal-website",
                 "order": 1,
             },
             {
-                "title": "App de Tareas",
-                "slug": "app-tareas",
-                "description": "Aplicación CRUD con autenticación y panel de administración.",
+                "title": "Plataforma de Seguros",
+                "slug": "plataforma-seguros",
+                "description": (
+                    "Plataforma web para cotización y gestión de pólizas de seguros. "
+                    "Incluye formularios dinámicos, cálculo de primas y panel de administración."
+                ),
                 "highlights": [
-                    "CRUD completo de tareas",
-                    "Autenticación de usuarios",
-                    "Panel de administración",
+                    "Cotizador en línea con cálculo automático de primas",
+                    "Gestión de pólizas, clientes y pagos",
+                    "Panel administrativo con reportes",
                 ],
-                "tech_stack": ["React", "Django REST", "PostgreSQL"],
+                "tech_stack": ["React", "TypeScript", "Django", "Django REST", "PostgreSQL"],
                 "demo_url": "",
-                "repo_url": "https://github.com",
+                "repo_url": "",
                 "order": 2,
+            },
+            {
+                "title": "Sistema de Gestión de Préstamos",
+                "slug": "gestion-prestamos",
+                "description": (
+                    "Plataforma interna para administrar préstamos de una empresa. "
+                    "Control de clientes, cuotas, pagos y estados de cuenta."
+                ),
+                "highlights": [
+                    "Registro y seguimiento de préstamos activos",
+                    "Cálculo automático de cuotas e intereses",
+                    "Historial de pagos y estados de cuenta",
+                ],
+                "tech_stack": ["React", "Django", "Django REST", "PostgreSQL"],
+                "demo_url": "",
+                "repo_url": "",
+                "order": 3,
             },
         ]
 

@@ -41,7 +41,7 @@ export interface Project {
   slug: string;
   description: string;
   highlights: string[];
-  image_url: string;
+  preview_image: string;
   demo_url: string;
   repo_url: string;
   tech_stack: string[];

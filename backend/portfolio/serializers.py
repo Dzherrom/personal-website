@@ -66,6 +66,8 @@ class ClientSerializer(serializers.ModelSerializer):
 
 
 class ProjectSerializer(serializers.ModelSerializer):
+    preview_image = serializers.SerializerMethodField()
+
     class Meta:
         model = Project
         fields = [
@@ -74,7 +76,7 @@ class ProjectSerializer(serializers.ModelSerializer):
             "slug",
             "description",
             "highlights",
-            "image_url",
+            "preview_image",
             "demo_url",
             "repo_url",
             "tech_stack",
@@ -82,6 +84,15 @@ class ProjectSerializer(serializers.ModelSerializer):
             "is_featured",
             "created_at",
         ]
+
+    def get_preview_image(self, obj: Project) -> str:
+        if not obj.preview_image:
+            return ""
+        request = self.context.get("request")
+        url = obj.preview_image.url
+        if request is not None:
+            return request.build_absolute_uri(url)
+        return url
 
 
 class SkillSerializer(serializers.ModelSerializer):
