@@ -18,7 +18,7 @@ export function ExperienceSection({ clients }: ExperienceSectionProps) {
         </h2>
       </ScrollReveal>
 
-      <div className={styles.projectsList}>
+      <div className={styles.experienceList}>
         {clients.map((client, index) => (
           <ScrollReveal
             key={client.id}
@@ -26,11 +26,11 @@ export function ExperienceSection({ clients }: ExperienceSectionProps) {
             direction="left"
           >
             <article
-              className={`${styles.projectCard} ${
-                client.preview_image ? styles.projectCardWithPreview : ""
+              className={`${styles.experienceCard} ${
+                client.preview_image ? styles.experienceCardWithPreview : ""
               }`}
             >
-              <div className={styles.projectCardContent}>
+              <div className={styles.experienceCardContent}>
                 <span className={styles.projectLabel}>Cliente</span>
                 <h3 className={styles.projectTitle}>{client.name}</h3>
 
@@ -66,7 +66,7 @@ export function ExperienceSection({ clients }: ExperienceSectionProps) {
               </div>
 
               {client.preview_image && (
-                <div className={styles.projectCardPreview}>
+                <div className={styles.experienceCardPreview}>
                   <img
                     src={getMediaUrl(client.preview_image)}
                     alt={`Preview de ${client.name}`}

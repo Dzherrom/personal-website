@@ -18,21 +18,25 @@ export function ProjectsSection({ projects }: ProjectsSectionProps) {
 
       <div className={styles.projectsList}>
         {projects.map((project, index) => {
-          const hasPreview = !!project.preview_image;
-          const isEven = index % 2 === 0;
+          const hasPreview = Boolean(project.preview_image);
+          const isReversed = index % 2 === 1;
           const projectUrl = project.demo_url || project.repo_url;
+
+          const articleClassName = [
+            styles.projectCard,
+            styles.projectCardWithPreview,
+            isReversed ? styles.projectCardReverse : "",
+          ]
+            .filter(Boolean)
+            .join(" ");
 
           return (
             <ScrollReveal
               key={project.id}
               delay={index * 0.1}
-              direction={isEven ? "left" : "right"}
+              direction={isReversed ? "right" : "left"}
             >
-              <article
-                className={`${styles.projectCard} ${
-                  hasPreview ? styles.projectCardWithPreview : ""
-                } ${!isEven && hasPreview ? styles.projectCardReverse : ""}`}
-              >
+              <article className={articleClassName}>
                 <div className={styles.projectCardContent}>
                   <span className={styles.projectLabel}>Proyecto</span>
                   <h3 className={styles.projectTitle}>{project.title}</h3>
@@ -68,7 +72,7 @@ export function ProjectsSection({ projects }: ProjectsSectionProps) {
                   </div>
                 </div>
 
-                {hasPreview && (
+                {hasPreview ? (
                   <a
                     href={projectUrl || "#"}
                     target="_blank"
@@ -82,6 +86,8 @@ export function ProjectsSection({ projects }: ProjectsSectionProps) {
                       loading="lazy"
                     />
                   </a>
+                ) : (
+                  <div className={styles.projectCardPreviewPlaceholder} aria-hidden="true" />
                 )}
               </article>
             </ScrollReveal>
