@@ -227,122 +227,176 @@
   }
 }
 
-/* ── Proyectos desarrollados (alternancia + overlay rojo) ── */
+/* ── Proyectos desarrollados (showcase con overlay) ── */
 .projectsList {
   display: flex;
   flex-direction: column;
   gap: 3rem;
 }
 
-.projectCard {
-  background: #12121c;
+.projectShowcase {
+  position: relative;
+  display: flex;
+  justify-content: flex-end;
+  align-items: stretch;
+  min-height: 480px;
+  border-radius: 12px;
+  overflow: hidden;
   border: 1px solid #2a2a3a;
-  border-radius: 16px;
+  background: #0a0a12;
+}
+
+.projectShowcaseReverse {
+  justify-content: flex-start;
+}
+
+.projectShowcaseNoImage {
+  background: linear-gradient(135deg, #12121c 0%, #0a0a12 100%);
+}
+
+.projectShowcaseBg {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: contain;
+  object-position: center;
+  background: #0a0a12;
+}
+
+.projectShowcaseBgPlaceholder {
+  position: absolute;
+  inset: 0;
+  background:
+    linear-gradient(135deg, rgba(18, 18, 28, 0.95) 0%, rgba(10, 10, 18, 0.98) 100%);
+}
+
+.projectOverlay {
+  position: relative;
+  z-index: 2;
+  display: flex;
+  flex-direction: column;
+  width: min(58%, 540px);
+  margin: 1.25rem;
   padding: 2rem;
-  transition: border-color 0.2s;
+  background: #e63946;
+  color: #ffffff;
+  box-shadow: 0 16px 40px rgba(0, 0, 0, 0.35);
+}
+
+.projectOverlayLabel {
+  display: block;
+  font-size: 0.8rem;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.12em;
+  color: rgba(255, 255, 255, 0.85);
+  margin-bottom: 0.5rem;
+}
+
+.projectOverlayTitle {
+  font-size: clamp(1.35rem, 3vw, 1.85rem);
+  font-weight: 800;
+  line-height: 1.15;
+  margin-bottom: 0.85rem;
+  color: #ffffff;
+}
+
+.projectOverlayDesc {
+  font-size: clamp(0.9rem, 1.5vw, 1rem);
+  line-height: 1.65;
+  color: rgba(255, 255, 255, 0.92);
+  margin-bottom: 1rem;
+}
+
+.projectOverlayHighlights {
+  list-style: disc;
+  padding-left: 1.2rem;
+  margin-bottom: 1.25rem;
+  color: rgba(255, 255, 255, 0.9);
+
+  li {
+    margin-bottom: 0.35rem;
+    line-height: 1.5;
+  }
+}
+
+.projectOverlayFooter {
+  display: flex;
+  align-items: flex-end;
+  justify-content: space-between;
+  gap: 1rem;
+  margin-top: auto;
+}
+
+.projectOverlayTags {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.45rem;
+  flex: 1;
+}
+
+.projectOverlayTag {
+  display: inline-block;
+  padding: 0.25rem 0.55rem;
+  background: #111111;
+  color: #ffffff;
+  font-size: 0.72rem;
+  font-weight: 700;
+  border-radius: 2px;
+}
+
+.projectOverlayIcons {
+  display: flex;
+  align-items: center;
+  gap: 0.85rem;
+  flex-shrink: 0;
+}
+
+.projectOverlayIconLink {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  color: #ffffff;
+  transition: transform 0.2s, opacity 0.2s;
 
   &:hover {
-    border-color: #505068;
-  }
-}
-
-.projectCardWithPreview {
-  display: grid;
-  grid-template-columns: minmax(0, 1fr) minmax(260px, 42%);
-  gap: 2rem;
-  align-items: stretch;
-}
-
-.projectCardContent {
-  min-width: 0;
-  order: 1;
-}
-
-.projectCardPreview {
-  order: 2;
-  display: block;
-  position: relative;
-  min-width: 0;
-  min-height: 240px;
-  height: 100%;
-  align-self: stretch;
-  border-radius: 10px;
-  overflow: hidden;
-  text-decoration: none;
-
-  img {
-    display: block;
-    width: 100%;
-    height: 100%;
-    min-height: 240px;
-    border: 1px solid #2a2a3a;
-    object-fit: cover;
-    object-position: center top;
-    box-shadow: 0 12px 32px rgba(0, 0, 0, 0.35);
-    transition: transform 0.3s ease;
-  }
-
-  &::after {
-    content: "";
-    position: absolute;
-    inset: 0;
-    background: rgba(230, 57, 70, 0.45);
-    transition: opacity 0.3s ease;
-    pointer-events: none;
-  }
-
-  &:hover::after {
-    opacity: 0;
-  }
-
-  &:hover img {
-    transform: scale(1.02);
-  }
-}
-
-.projectCardPreviewPlaceholder {
-  order: 2;
-  min-height: 240px;
-  height: 100%;
-  align-self: stretch;
-  border-radius: 10px;
-  border: 1px dashed #2a2a3a;
-  background: rgba(18, 18, 28, 0.6);
-}
-
-.projectCardReverse {
-  .projectCardContent {
-    order: 2;
-  }
-
-  .projectCardPreview,
-  .projectCardPreviewPlaceholder {
-    order: 1;
+    transform: translateY(-2px);
+    opacity: 0.85;
   }
 }
 
 @media (max-width: 768px) {
-  .projectCardWithPreview,
-  .projectCardReverse {
-    grid-template-columns: 1fr;
+  .projectShowcase {
+    flex-direction: column;
+    justify-content: flex-end;
+    min-height: auto;
   }
 
-  .projectCardContent,
-  .projectCardPreview,
-  .projectCardPreviewPlaceholder {
-    order: unset;
+  .projectShowcaseReverse {
+    flex-direction: column;
   }
 
-  .projectCardPreview,
-  .projectCardPreviewPlaceholder {
-    order: -1;
-    min-height: 220px;
-    height: auto;
-  }
-
-  .projectCardPreview img {
-    min-height: 220px;
+  .projectShowcaseBg {
+    position: relative;
+    inset: auto;
+    width: 100%;
     height: 220px;
+    object-fit: cover;
+    object-position: center top;
+  }
+
+  .projectShowcaseBgPlaceholder {
+    position: relative;
+    inset: auto;
+    width: 100%;
+    height: 160px;
+  }
+
+  .projectOverlay {
+    width: auto;
+    margin: 0;
+    border-radius: 0;
   }
 }
 

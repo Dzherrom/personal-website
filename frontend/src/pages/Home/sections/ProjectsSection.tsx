@@ -1,6 +1,8 @@
 import { ScrollReveal } from "../../../components/animations/ScrollReveal";
 import { getMediaUrl } from "../../../services/api";
 import type { Project } from "../../../types/api";
+import { FaGithub } from "react-icons/fa";
+import { FiExternalLink } from "react-icons/fi";
 import styles from "../Home.module.scss";
 
 interface ProjectsSectionProps {
@@ -20,12 +22,11 @@ export function ProjectsSection({ projects }: ProjectsSectionProps) {
         {projects.map((project, index) => {
           const hasPreview = Boolean(project.preview_image);
           const isReversed = index % 2 === 1;
-          const projectUrl = project.demo_url || project.repo_url;
 
           const articleClassName = [
-            styles.projectCard,
-            styles.projectCardWithPreview,
-            isReversed ? styles.projectCardReverse : "",
+            styles.projectShowcase,
+            isReversed ? styles.projectShowcaseReverse : "",
+            !hasPreview ? styles.projectShowcaseNoImage : "",
           ]
             .filter(Boolean)
             .join(" ");
@@ -37,58 +38,69 @@ export function ProjectsSection({ projects }: ProjectsSectionProps) {
               direction={isReversed ? "right" : "left"}
             >
               <article className={articleClassName}>
-                <div className={styles.projectCardContent}>
-                  <span className={styles.projectLabel}>Proyecto</span>
-                  <h3 className={styles.projectTitle}>{project.title}</h3>
-                  <p className={styles.projectDesc}>{project.description}</p>
+                {hasPreview ? (
+                  <img
+                    className={styles.projectShowcaseBg}
+                    src={getMediaUrl(project.preview_image)}
+                    alt=""
+                    aria-hidden="true"
+                    loading="lazy"
+                  />
+                ) : (
+                  <div
+                    className={styles.projectShowcaseBgPlaceholder}
+                    aria-hidden="true"
+                  />
+                )}
+
+                <div className={styles.projectOverlay}>
+                  <span className={styles.projectOverlayLabel}>Proyecto</span>
+                  <h3 className={styles.projectOverlayTitle}>{project.title}</h3>
+                  <p className={styles.projectOverlayDesc}>{project.description}</p>
 
                   {project.highlights.length > 0 && (
-                    <ul className={styles.projectHighlights}>
+                    <ul className={styles.projectOverlayHighlights}>
                       {project.highlights.map((item) => (
                         <li key={item}>{item}</li>
                       ))}
                     </ul>
                   )}
 
-                  <div className={styles.projectTags}>
-                    {project.tech_stack.map((tech) => (
-                      <span key={tech} className={styles.projectTag}>
-                        #{tech}
-                      </span>
-                    ))}
-                  </div>
+                  <div className={styles.projectOverlayFooter}>
+                    <div className={styles.projectOverlayTags}>
+                      {project.tech_stack.map((tech) => (
+                        <span key={tech} className={styles.projectOverlayTag}>
+                          #{tech}
+                        </span>
+                      ))}
+                    </div>
 
-                  <div className={styles.projectLinks}>
-                    {project.demo_url && (
-                      <a href={project.demo_url} target="_blank" rel="noreferrer">
-                        Demo
-                      </a>
-                    )}
-                    {project.repo_url && (
-                      <a href={project.repo_url} target="_blank" rel="noreferrer">
-                        Repo
-                      </a>
-                    )}
+                    <div className={styles.projectOverlayIcons}>
+                      {project.repo_url && (
+                        <a
+                          href={project.repo_url}
+                          target="_blank"
+                          rel="noreferrer"
+                          className={styles.projectOverlayIconLink}
+                          aria-label={`Repositorio de ${project.title} en GitHub`}
+                        >
+                          <FaGithub size={22} />
+                        </a>
+                      )}
+                      {project.demo_url && (
+                        <a
+                          href={project.demo_url}
+                          target="_blank"
+                          rel="noreferrer"
+                          className={styles.projectOverlayIconLink}
+                          aria-label={`Ver demo de ${project.title}`}
+                        >
+                          <FiExternalLink size={22} />
+                        </a>
+                      )}
+                    </div>
                   </div>
                 </div>
-
-                {hasPreview ? (
-                  <a
-                    href={projectUrl || "#"}
-                    target="_blank"
-                    rel="noreferrer"
-                    className={styles.projectCardPreview}
-                    aria-label={`Ver ${project.title}`}
-                  >
-                    <img
-                      src={getMediaUrl(project.preview_image)}
-                      alt={`Preview de ${project.title}`}
-                      loading="lazy"
-                    />
-                  </a>
-                ) : (
-                  <div className={styles.projectCardPreviewPlaceholder} aria-hidden="true" />
-                )}
               </article>
             </ScrollReveal>
           );
