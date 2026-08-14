@@ -1,6 +1,7 @@
 import { ScrollReveal } from "../../../components/animations/ScrollReveal";
 import { getMediaUrl } from "../../../services/api";
 import type { Client } from "../../../types/api";
+import { FiExternalLink } from "react-icons/fi";
 import styles from "../Home.module.scss";
 
 interface ExperienceSectionProps {
@@ -46,21 +47,31 @@ export function ExperienceSection({ clients }: ExperienceSectionProps) {
                   </ul>
                 )}
 
-                {client.tech_stack.length > 0 && (
-                  <div className={styles.projectTags}>
-                    {client.tech_stack.map((tech) => (
-                      <span key={tech} className={styles.projectTag}>
-                        #{tech}
-                      </span>
-                    ))}
-                  </div>
-                )}
+                {(client.tech_stack.length > 0 || client.website_url) && (
+                  <div className={styles.experienceCardFooter}>
+                    {client.tech_stack.length > 0 && (
+                      <div className={styles.projectTags}>
+                        {client.tech_stack.map((tech) => (
+                          <span key={tech} className={styles.projectTag}>
+                            #{tech}
+                          </span>
+                        ))}
+                      </div>
+                    )}
 
-                {client.website_url && (
-                  <div className={styles.projectLinks}>
-                    <a href={client.website_url} target="_blank" rel="noreferrer">
-                      Visitar sitio
-                    </a>
+                    {client.website_url && (
+                      <div className={styles.experienceCardIcons}>
+                        <a
+                          href={client.website_url}
+                          target="_blank"
+                          rel="noreferrer"
+                          className={styles.experienceCardIconLink}
+                          aria-label={`Visitar sitio de ${client.name}`}
+                        >
+                          <FiExternalLink size={24} strokeWidth={1.75} />
+                        </a>
+                      </div>
+                    )}
                   </div>
                 )}
               </div>

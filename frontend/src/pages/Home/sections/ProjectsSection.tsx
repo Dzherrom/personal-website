@@ -63,39 +63,45 @@ export function ProjectsSection({ projects }: ProjectsSectionProps) {
                       </ul>
                     )}
 
-                    <div className={styles.projectOverlayFooter}>
-                      <div className={styles.projectOverlayTags}>
-                        {project.tech_stack.map((tech) => (
-                          <span key={tech} className={styles.projectOverlayTag}>
-                            #{tech}
-                          </span>
-                        ))}
-                      </div>
-                    </div>
-
-                    {(project.repo_url || project.demo_url) && (
-                      <div className={styles.projectOverlayIcons}>
-                        {project.repo_url && (
-                          <a
-                            href={project.repo_url}
-                            target="_blank"
-                            rel="noreferrer"
-                            className={styles.projectOverlayIconLink}
-                            aria-label={`Repositorio de ${project.title} en GitHub`}
-                          >
-                            <FiGithub size={24} strokeWidth={1.75} />
-                          </a>
+                    {(project.tech_stack.length > 0 ||
+                      project.repo_url ||
+                      project.demo_url) && (
+                      <div className={styles.projectOverlayFooter}>
+                        {project.tech_stack.length > 0 && (
+                          <div className={styles.projectOverlayTags}>
+                            {project.tech_stack.map((tech) => (
+                              <span key={tech} className={styles.projectOverlayTag}>
+                                #{tech}
+                              </span>
+                            ))}
+                          </div>
                         )}
-                        {project.demo_url && (
-                          <a
-                            href={project.demo_url}
-                            target="_blank"
-                            rel="noreferrer"
-                            className={styles.projectOverlayIconLink}
-                            aria-label={`Ver demo de ${project.title}`}
-                          >
-                            <FiExternalLink size={24} strokeWidth={1.75} />
-                          </a>
+
+                        {(project.repo_url || project.demo_url) && (
+                          <div className={styles.projectOverlayIcons}>
+                            {project.repo_url && (
+                              <a
+                                href={project.repo_url}
+                                target="_blank"
+                                rel="noreferrer"
+                                className={styles.projectOverlayIconLink}
+                                aria-label={`Repositorio de ${project.title} en GitHub`}
+                              >
+                                <FiGithub size={24} strokeWidth={1.75} />
+                              </a>
+                            )}
+                            {project.demo_url && (
+                              <a
+                                href={project.demo_url}
+                                target="_blank"
+                                rel="noreferrer"
+                                className={styles.projectOverlayIconLink}
+                                aria-label={`Ver demo de ${project.title}`}
+                              >
+                                <FiExternalLink size={24} strokeWidth={1.75} />
+                              </a>
+                            )}
+                          </div>
                         )}
                       </div>
                     )}

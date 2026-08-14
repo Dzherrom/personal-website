@@ -32,6 +32,7 @@ export interface Client {
   logo_url: string;
   preview_image: string;
   website_url: string;
+  repo_url: string;
   order: number;
 }
 

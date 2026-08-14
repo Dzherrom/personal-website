@@ -89,6 +89,7 @@ class Client(models.Model):
         help_text="Captura o preview del proyecto. Se muestra a la derecha en la tarjeta.",
     )
     website_url = models.URLField(blank=True, help_text="Enlace al sitio del cliente")
+    repo_url = models.URLField(blank=True, help_text="Repositorio en GitHub del proyecto")
     order = models.PositiveIntegerField(default=0)
 
     class Meta:

@@ -70,6 +70,7 @@ class Command(BaseCommand):
                 ],
                 "tech_stack": ["React", "TypeScript", "CSS"],
                 "website_url": "https://www.hiretaskup.com",
+                "repo_url": "https://github.com/Dzherrom/hiretaskup",
                 "logo_url": "",
                 "order": 1,
             },

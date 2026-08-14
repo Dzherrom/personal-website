@@ -52,6 +52,7 @@ class ClientSerializer(serializers.ModelSerializer):
             "logo_url",
             "preview_image",
             "website_url",
+            "repo_url",
             "order",
         ]
 

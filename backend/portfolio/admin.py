@@ -68,7 +68,7 @@ class ClientAdmin(admin.ModelAdmin):
         (
             "Enlaces",
             {
-                "fields": ("website_url", "logo_url"),
+                "fields": ("website_url", "repo_url", "logo_url"),
             },
         ),
     )
