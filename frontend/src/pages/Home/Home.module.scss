@@ -255,9 +255,8 @@
   --project-composition-width: min(960px, 100%);
   --project-composition-height: 28rem;
   --project-image-bleed: 80px;
-  --project-image-fit: contain;
+  --project-image-fit: cover;
   --project-image-position: center center;
-  --project-image-inset: 0.65rem;
 
   display: flex;
   justify-content: center;
@@ -284,10 +283,6 @@
   left: var(--project-image-offset);
   width: var(--project-image-width);
   height: 100%;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  padding: var(--project-image-inset);
   overflow: hidden;
   border-radius: 12px;
   background: #0a0a12;
@@ -301,17 +296,18 @@
     opacity: 1;
     transition: opacity 0.35s ease;
     pointer-events: none;
-    z-index: 1;
+    z-index: 2;
+  }
+
+  &:hover::after,
+  &:focus-within::after {
+    opacity: 0;
   }
 }
 
 .projectRowReverse .projectImageWrap {
   left: auto;
   right: var(--project-image-offset);
-}
-
-.projectRow:hover .projectImageWrap::after {
-  opacity: 0;
 }
 
 .projectImage {
@@ -340,7 +336,7 @@
   column-gap: 1.25rem;
   row-gap: 0.35rem;
   align-content: center;
-  padding: 1.15rem 1.75rem 1rem;
+  padding: 1.15rem 1.75rem 2.75rem;
   background: #e63946;
   color: #ffffff;
   box-shadow: 0 22px 50px rgba(0, 0, 0, 0.48);
@@ -401,17 +397,15 @@
 .projectOverlayFooter {
   grid-column: 1 / -1;
   display: flex;
-  align-items: center;
-  justify-content: space-between;
-  gap: 1rem;
+  align-items: flex-end;
   margin-top: 0.15rem;
+  padding-right: 4.5rem;
 }
 
 .projectOverlayTags {
   display: flex;
   flex-wrap: wrap;
   gap: 0.45rem;
-  flex: 1;
 }
 
 .projectOverlayTag {
@@ -425,10 +419,13 @@
 }
 
 .projectOverlayIcons {
+  position: absolute;
+  right: 1.75rem;
+  bottom: 1rem;
   display: flex;
   align-items: center;
   gap: 0.85rem;
-  flex-shrink: 0;
+  z-index: 1;
 }
 
 .projectOverlayIconLink {
@@ -441,6 +438,12 @@
   &:hover {
     transform: translateY(-2px);
     opacity: 0.85;
+  }
+
+  &:focus-visible {
+    outline: 2px solid #ffffff;
+    outline-offset: 3px;
+    border-radius: 2px;
   }
 }
 
@@ -487,7 +490,7 @@
     width: 100%;
     display: flex;
     flex-direction: column;
-    padding: 1.25rem 1.5rem;
+    padding: 1.25rem 1.5rem 2.75rem;
     border-radius: 0 0 12px 12px;
     box-shadow: none;
   }

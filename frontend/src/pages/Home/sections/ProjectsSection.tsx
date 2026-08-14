@@ -1,8 +1,7 @@
 import { ScrollReveal } from "../../../components/animations/ScrollReveal";
 import { getMediaUrl } from "../../../services/api";
 import type { Project } from "../../../types/api";
-import { FaGithub } from "react-icons/fa";
-import { FiExternalLink } from "react-icons/fi";
+import { FiExternalLink, FiGithub } from "react-icons/fi";
 import styles from "../Home.module.scss";
 
 interface ProjectsSectionProps {
@@ -52,53 +51,55 @@ export function ProjectsSection({ projects }: ProjectsSectionProps) {
                   </div>
 
                   <div className={styles.projectOverlay}>
-                  <span className={styles.projectOverlayLabel}>Proyecto</span>
-                  <h3 className={styles.projectOverlayTitle}>{project.title}</h3>
-                  <p className={styles.projectOverlayDesc}>{project.description}</p>
+                    <span className={styles.projectOverlayLabel}>Proyecto</span>
+                    <h3 className={styles.projectOverlayTitle}>{project.title}</h3>
+                    <p className={styles.projectOverlayDesc}>{project.description}</p>
 
-                  {project.highlights.length > 0 && (
-                    <ul className={styles.projectOverlayHighlights}>
-                      {project.highlights.map((item) => (
-                        <li key={item}>{item}</li>
-                      ))}
-                    </ul>
-                  )}
+                    {project.highlights.length > 0 && (
+                      <ul className={styles.projectOverlayHighlights}>
+                        {project.highlights.map((item) => (
+                          <li key={item}>{item}</li>
+                        ))}
+                      </ul>
+                    )}
 
-                  <div className={styles.projectOverlayFooter}>
-                    <div className={styles.projectOverlayTags}>
-                      {project.tech_stack.map((tech) => (
-                        <span key={tech} className={styles.projectOverlayTag}>
-                          #{tech}
-                        </span>
-                      ))}
+                    <div className={styles.projectOverlayFooter}>
+                      <div className={styles.projectOverlayTags}>
+                        {project.tech_stack.map((tech) => (
+                          <span key={tech} className={styles.projectOverlayTag}>
+                            #{tech}
+                          </span>
+                        ))}
+                      </div>
                     </div>
 
-                    <div className={styles.projectOverlayIcons}>
-                      {project.repo_url && (
-                        <a
-                          href={project.repo_url}
-                          target="_blank"
-                          rel="noreferrer"
-                          className={styles.projectOverlayIconLink}
-                          aria-label={`Repositorio de ${project.title} en GitHub`}
-                        >
-                          <FaGithub size={22} />
-                        </a>
-                      )}
-                      {project.demo_url && (
-                        <a
-                          href={project.demo_url}
-                          target="_blank"
-                          rel="noreferrer"
-                          className={styles.projectOverlayIconLink}
-                          aria-label={`Ver demo de ${project.title}`}
-                        >
-                          <FiExternalLink size={22} />
-                        </a>
-                      )}
-                    </div>
+                    {(project.repo_url || project.demo_url) && (
+                      <div className={styles.projectOverlayIcons}>
+                        {project.repo_url && (
+                          <a
+                            href={project.repo_url}
+                            target="_blank"
+                            rel="noreferrer"
+                            className={styles.projectOverlayIconLink}
+                            aria-label={`Repositorio de ${project.title} en GitHub`}
+                          >
+                            <FiGithub size={24} strokeWidth={1.75} />
+                          </a>
+                        )}
+                        {project.demo_url && (
+                          <a
+                            href={project.demo_url}
+                            target="_blank"
+                            rel="noreferrer"
+                            className={styles.projectOverlayIconLink}
+                            aria-label={`Ver demo de ${project.title}`}
+                          >
+                            <FiExternalLink size={24} strokeWidth={1.75} />
+                          </a>
+                        )}
+                      </div>
+                    )}
                   </div>
-                </div>
                 </div>
               </article>
             </ScrollReveal>
