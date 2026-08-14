@@ -227,106 +227,184 @@
   }
 }
 
-/* ── Proyectos desarrollados (showcase con overlay) ── */
+/* ── Proyectos desarrollados (imagen + tarjeta superpuesta) ── */
+.projectsSection {
+  padding: calc(5rem * 1.05) calc(2rem * 1.05) 1.5rem;
+  max-width: calc(1100px * 1.05);
+}
+
+.projectsSection .sectionTitle {
+  margin-bottom: calc(1rem * 1.05);
+}
+
 .projectsList {
   display: flex;
   flex-direction: column;
-  gap: 3rem;
+  gap: 1rem;
 }
 
-.projectShowcase {
-  position: relative;
+.projectsSection .projectRow:last-child {
+  padding-bottom: 1.5rem;
+}
+
+.projectRow {
+  --project-card-share: 60%;
+  --project-image-width: 75%;
+  --project-image-offset: -1.5rem;
+  --project-overlay-anchor: 1.2;
+  --project-composition-width: min(960px, 100%);
+  --project-composition-height: 28rem;
+  --project-image-bleed: 80px;
+  --project-image-fit: contain;
+  --project-image-position: center center;
+  --project-image-inset: 0.65rem;
+
   display: flex;
-  justify-content: flex-end;
-  align-items: stretch;
-  min-height: 480px;
-  border-radius: 12px;
+  justify-content: center;
+  align-items: center;
+  position: relative;
+  width: 100%;
+  min-height: calc(var(--project-composition-height) + 2 * var(--project-image-bleed));
+  padding: var(--project-image-bleed) 1rem;
+  margin: 0;
+}
+
+.projectComposition {
+  position: relative;
+  width: var(--project-composition-width);
+  height: var(--project-composition-height);
+  flex-shrink: 0;
+  overflow: visible;
+}
+
+.projectImageWrap {
+  position: absolute;
+  z-index: 1;
+  top: 0;
+  left: var(--project-image-offset);
+  width: var(--project-image-width);
+  height: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: var(--project-image-inset);
   overflow: hidden;
-  border: 1px solid #2a2a3a;
+  border-radius: 12px;
   background: #0a0a12;
+  box-shadow: 0 14px 36px rgba(0, 0, 0, 0.42);
+
+  &::after {
+    content: "";
+    position: absolute;
+    inset: 0;
+    background: rgba(230, 57, 70, 0.52);
+    opacity: 1;
+    transition: opacity 0.35s ease;
+    pointer-events: none;
+    z-index: 1;
+  }
 }
 
-.projectShowcaseReverse {
-  justify-content: flex-start;
+.projectRowReverse .projectImageWrap {
+  left: auto;
+  right: var(--project-image-offset);
 }
 
-.projectShowcaseNoImage {
+.projectRow:hover .projectImageWrap::after {
+  opacity: 0;
+}
+
+.projectImage {
+  display: block;
+  width: 100%;
+  height: 100%;
+  object-fit: var(--project-image-fit);
+  object-position: var(--project-image-position);
+}
+
+.projectImagePlaceholder {
+  width: 100%;
+  height: 100%;
   background: linear-gradient(135deg, #12121c 0%, #0a0a12 100%);
 }
 
-.projectShowcaseBg {
-  position: absolute;
-  inset: 0;
-  width: 100%;
-  height: 100%;
-  object-fit: contain;
-  object-position: center;
-  background: #0a0a12;
-}
-
-.projectShowcaseBgPlaceholder {
-  position: absolute;
-  inset: 0;
-  background:
-    linear-gradient(135deg, rgba(18, 18, 28, 0.95) 0%, rgba(10, 10, 18, 0.98) 100%);
-}
-
 .projectOverlay {
-  position: relative;
+  position: absolute;
+  top: 50%;
+  left: calc(var(--project-image-offset) + var(--project-image-width) / var(--project-overlay-anchor));
   z-index: 2;
-  display: flex;
-  flex-direction: column;
-  width: min(58%, 540px);
-  margin: 1.25rem;
-  padding: 2rem;
+  width: var(--project-card-share);
+  transform: translateY(-50%);
+  display: grid;
+  grid-template-columns: 1.15fr 0.85fr;
+  column-gap: 1.25rem;
+  row-gap: 0.35rem;
+  align-content: center;
+  padding: 1.15rem 1.75rem 1rem;
   background: #e63946;
   color: #ffffff;
-  box-shadow: 0 16px 40px rgba(0, 0, 0, 0.35);
+  box-shadow: 0 22px 50px rgba(0, 0, 0, 0.48);
+}
+
+.projectRowReverse .projectOverlay {
+  left: auto;
+  right: calc(var(--project-image-offset) + var(--project-image-width) / var(--project-overlay-anchor));
 }
 
 .projectOverlayLabel {
+  grid-column: 1 / -1;
   display: block;
-  font-size: 0.8rem;
+  font-size: 0.72rem;
   font-weight: 600;
   text-transform: uppercase;
   letter-spacing: 0.12em;
   color: rgba(255, 255, 255, 0.85);
-  margin-bottom: 0.5rem;
+  margin-bottom: 0;
 }
 
 .projectOverlayTitle {
-  font-size: clamp(1.35rem, 3vw, 1.85rem);
+  grid-column: 1 / -1;
+  font-size: clamp(1.15rem, 2vw, 1.45rem);
   font-weight: 800;
-  line-height: 1.15;
-  margin-bottom: 0.85rem;
+  line-height: 1.08;
+  margin-bottom: 0.15rem;
   color: #ffffff;
 }
 
 .projectOverlayDesc {
-  font-size: clamp(0.9rem, 1.5vw, 1rem);
-  line-height: 1.65;
+  grid-column: 1;
+  font-size: clamp(0.78rem, 1.05vw, 0.86rem);
+  line-height: 1.4;
   color: rgba(255, 255, 255, 0.92);
-  margin-bottom: 1rem;
+  margin-bottom: 0;
+}
+
+.projectOverlay:not(:has(.projectOverlayHighlights)) .projectOverlayDesc {
+  grid-column: 1 / -1;
 }
 
 .projectOverlayHighlights {
+  grid-column: 2;
+  align-self: center;
   list-style: disc;
-  padding-left: 1.2rem;
-  margin-bottom: 1.25rem;
+  padding-left: 1rem;
+  margin-bottom: 0;
   color: rgba(255, 255, 255, 0.9);
 
   li {
-    margin-bottom: 0.35rem;
-    line-height: 1.5;
+    margin-bottom: 0.15rem;
+    line-height: 1.25;
+    font-size: clamp(0.74rem, 1vw, 0.82rem);
   }
 }
 
 .projectOverlayFooter {
+  grid-column: 1 / -1;
   display: flex;
-  align-items: flex-end;
+  align-items: center;
   justify-content: space-between;
   gap: 1rem;
-  margin-top: auto;
+  margin-top: 0.15rem;
 }
 
 .projectOverlayTags {
@@ -367,36 +445,77 @@
 }
 
 @media (max-width: 768px) {
-  .projectShowcase {
-    flex-direction: column;
-    justify-content: flex-end;
+  .projectRow {
+    --project-composition-width: 100%;
+    --project-composition-height: auto;
+    --project-image-bleed: 0px;
+    --project-image-offset: 0px;
     min-height: auto;
+    display: block;
+    padding: 0;
   }
 
-  .projectShowcaseReverse {
+  .projectComposition {
+    width: 100%;
+    height: auto;
+    display: flex;
     flex-direction: column;
   }
 
-  .projectShowcaseBg {
+  .projectImageWrap {
     position: relative;
-    inset: auto;
+    top: auto;
+    left: auto;
+    right: auto;
     width: 100%;
-    height: 220px;
-    object-fit: cover;
-    object-position: center top;
+    height: auto;
+    aspect-ratio: 16 / 10;
+    box-shadow: none;
   }
 
-  .projectShowcaseBgPlaceholder {
-    position: relative;
-    inset: auto;
-    width: 100%;
-    height: 160px;
+  .projectRowReverse .projectImageWrap {
+    left: auto;
+    right: auto;
   }
 
   .projectOverlay {
-    width: auto;
-    margin: 0;
-    border-radius: 0;
+    position: relative;
+    top: auto;
+    left: auto;
+    right: auto;
+    transform: none;
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    padding: 1.25rem 1.5rem;
+    border-radius: 0 0 12px 12px;
+    box-shadow: none;
+  }
+
+  .projectRowReverse .projectOverlay {
+    right: auto;
+    order: 2;
+  }
+
+  .projectImagePlaceholder {
+    aspect-ratio: 16 / 10;
+    min-height: 220px;
+  }
+
+  .projectOverlayLabel,
+  .projectOverlayTitle,
+  .projectOverlayDesc,
+  .projectOverlayHighlights,
+  .projectOverlayFooter {
+    grid-column: auto;
+  }
+
+  .projectOverlayDesc {
+    margin-bottom: 0.65rem;
+  }
+
+  .projectOverlayHighlights {
+    margin-bottom: 0.75rem;
   }
 }
 
@@ -462,6 +581,11 @@
 }
 
 /* ── Contacto ── */
+.contactSection {
+  padding: 1.5rem calc(2rem * 1.05) calc(5rem * 1.05);
+  max-width: calc(1100px * 1.05);
+}
+
 .contactText {
   text-align: center;
   color: #9090a8;

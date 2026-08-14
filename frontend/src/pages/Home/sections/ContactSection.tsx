@@ -17,7 +17,7 @@ export function ContactSection({ profile }: ContactSectionProps) {
     : null;
 
   return (
-    <section className={styles.section} id="contacto">
+    <section className={`${styles.section} ${styles.contactSection}`} id="contacto">
       <ScrollReveal>
         <h2 className={styles.sectionTitle}>{profile.contact_title}</h2>
       </ScrollReveal>
