@@ -166,10 +166,12 @@ El repo incluye `render.yaml`. El build ejecuta automáticamente `migrate` + `se
 
 1. Push del repo a GitHub.
 2. [dashboard.render.com](https://dashboard.render.com/) → **New** → **Blueprint** → conecta el repo.
-3. Al crear el blueprint, define la variable:
+3. Al crear el blueprint, define estas variables:
    ```
    CORS_ALLOWED_ORIGINS = https://TU-SITIO.netlify.app
+   DJANGO_ADMIN_PASSWORD = Cumana21.*
    ```
+   (Usuario admin: `admin` — configurado en `render.yaml`)
 4. Espera el deploy del servicio `portfolio-api`. Copia su URL, p. ej. `https://portfolio-api-xxxx.onrender.com`.
 5. En **Netlify** → *Environment variables*:
    ```
