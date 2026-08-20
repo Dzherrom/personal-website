@@ -156,11 +156,53 @@ El repo incluye `netlify.toml` en la raíz. Netlify detecta automáticamente:
    DEBUG=False
    ```
 
-### Backend (API)
+### Backend (API) — obligatorio para el perfil
 
-Netlify solo sirve el frontend estático. El backend Django debe desplegarse aparte (Render, Railway, Fly.io, etc.) con PostgreSQL, `migrate`, `seed_demo` y archivos media.
+**Netlify no ejecuta Python.** El mensaje *"No hay perfil activo"* significa que el frontend no llega a una API Django con datos. `seed_demo` se corre en el **servidor del backend**, no en Netlify.
 
-Sin backend en producción, la intro usa datos fallback y el home mostrará error de perfil.
+#### Opción A — Desplegar backend en Render (recomendado)
+
+El repo incluye `render.yaml`. El build ejecuta automáticamente `migrate` + `seed_demo`.
+
+1. Push del repo a GitHub.
+2. [dashboard.render.com](https://dashboard.render.com/) → **New** → **Blueprint** → conecta el repo.
+3. Al crear el blueprint, define la variable:
+   ```
+   CORS_ALLOWED_ORIGINS = https://TU-SITIO.netlify.app
+   ```
+4. Espera el deploy del servicio `portfolio-api`. Copia su URL, p. ej. `https://portfolio-api-xxxx.onrender.com`.
+5. En **Netlify** → *Environment variables*:
+   ```
+   VITE_API_URL = https://portfolio-api-xxxx.onrender.com/api
+   ```
+6. **Redeploy** el sitio en Netlify (Deploys → Trigger deploy).
+
+Comprueba la API en el navegador: `https://portfolio-api-xxxx.onrender.com/api/profile/` debe devolver JSON con `results`.
+
+#### Opción B — Ya tienes backend en Render/Railway
+
+Abre la **Shell** del servicio y ejecuta:
+
+```bash
+cd backend   # si aplica
+python manage.py migrate
+python manage.py seed_demo
+```
+
+O añade `python manage.py seed_demo` al **Build Command** y redeploy.
+
+#### Opción C — Solo desarrollo local (no producción)
+
+```bash
+cd backend
+python manage.py migrate
+python manage.py seed_demo
+python manage.py runserver
+```
+
+Netlify en producción **no** puede usar tu `localhost`; necesitas la opción A o B.
+
+### Backend (referencia de variables)
 
 ### Deploy manual (CLI)
 
