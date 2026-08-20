@@ -1,15 +1,17 @@
 import { motion } from "framer-motion";
+import { useLanguage } from "../../../context/LanguageContext";
 import styles from "./SideStatusLabel.module.scss";
 
 interface Props {
   text?: string;
 }
 
-export function SideStatusLabel({
-  text = "Sitio desactualizado, nuevo en construcción",
-}: Props) {
+export function SideStatusLabel({ text }: Props) {
+  const { t } = useLanguage();
+  const label = text ?? t("home.banner");
+
   return (
-    <aside className={styles.sidebar} aria-label="Estado del sitio">
+    <aside className={styles.sidebar} aria-label={t("side.siteStatus")}>
       <motion.div
         initial={{ opacity: 0, x: 80 }}
         animate={{ opacity: 1, x: 0 }}
@@ -20,7 +22,7 @@ export function SideStatusLabel({
         }}
       >
         <a href="#inicio" className={styles.rotatedText}>
-          {text}
+          {label}
         </a>
       </motion.div>
       <div className={styles.line} aria-hidden="true" />

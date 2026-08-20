@@ -1,8 +1,14 @@
 import { motion } from "framer-motion";
-import { useEffect, useState } from "react";
+import { useEffect, useMemo, useState } from "react";
 import { Link } from "react-router-dom";
 import { LetterStagger } from "../../components/animations/LetterStagger";
 import { Typewriter } from "../../components/animations/Typewriter";
+import { LangToggle } from "../../components/layout/LangToggle";
+import { useLanguage } from "../../context/LanguageContext";
+import {
+  localizeFallbackProfile,
+  localizeProfile,
+} from "../../i18n/localizeContent";
 import { getProfile } from "../../services/api";
 import type { SiteProfile } from "../../types/api";
 import styles from "./Intro.module.scss";
@@ -28,24 +34,44 @@ const FALLBACK_PROFILE: SiteProfile = {
 };
 
 export function Intro() {
+  const { locale, t } = useLanguage();
   const [profile, setProfile] = useState<SiteProfile | null>(null);
+  const [usedFallback, setUsedFallback] = useState(false);
 
   useEffect(() => {
     getProfile()
-      .then((data) => setProfile(data ?? FALLBACK_PROFILE))
-      .catch(() => setProfile(FALLBACK_PROFILE));
+      .then((data) => {
+        if (data) {
+          setProfile(data);
+          setUsedFallback(false);
+        } else {
+          setProfile(FALLBACK_PROFILE);
+          setUsedFallback(true);
+        }
+      })
+      .catch(() => {
+        setProfile(FALLBACK_PROFILE);
+        setUsedFallback(true);
+      });
   }, []);
 
-  if (!profile) {
+  const localizedProfile = useMemo(() => {
+    if (!profile) return null;
+    return usedFallback
+      ? localizeFallbackProfile(profile, locale)
+      : localizeProfile(profile, locale);
+  }, [profile, locale, usedFallback]);
+
+  if (!localizedProfile) {
     return (
       <section className={styles.splash}>
         <div className={styles.background} />
-        <p className={styles.loading}>Cargando...</p>
+        <p className={styles.loading}>{t("loading")}</p>
       </section>
     );
   }
 
-  const greetingDelay = profile.intro_greeting.length * 0.02 + 0.3;
+  const greetingDelay = localizedProfile.intro_greeting.length * 0.02 + 0.3;
 
   return (
     <section className={styles.splash}>
@@ -56,13 +82,19 @@ export function Intro() {
         transition={{ duration: 1.2 }}
       />
 
+      <div className={styles.langToggleWrap}>
+        <LangToggle />
+      </div>
+
       <div className={styles.content}>
         <LetterStagger
-          text={profile.intro_greeting}
+          key={`${locale}-greeting`}
+          text={localizedProfile.intro_greeting}
           className={styles.greeting}
         />
         <LetterStagger
-          text={profile.intro_name}
+          key={`${locale}-name`}
+          text={localizedProfile.intro_name}
           className={styles.name}
           delayOffset={greetingDelay}
           wrapAtSpaces
@@ -76,22 +108,26 @@ export function Intro() {
             type: "spring",
             stiffness: 50,
             damping: 20,
-            delay: greetingDelay + profile.intro_name.length * 0.02 + 0.5,
+            delay: greetingDelay + localizedProfile.intro_name.length * 0.02 + 0.5,
           }}
         >
-          Soy un apasionado{" "}
+          {t("intro.passionate")}{" "}
           <span className={styles.highlight}>
-            <Typewriter strings={profile.typewriter_roles} />
+            <Typewriter
+              key={locale}
+              strings={localizedProfile.typewriter_roles}
+            />
           </span>
         </motion.p>
 
-        <motion.div className={styles.ctaWrapper}
+        <motion.div
+          className={styles.ctaWrapper}
           initial={{ opacity: 0, y: 30 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ delay: 2, duration: 0.5 }}
         >
           <Link to="/home" className={styles.cta}>
-            ¡Empecemos!
+            {t("intro.cta")}
           </Link>
         </motion.div>
       </div>

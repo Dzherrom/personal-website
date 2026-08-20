@@ -1,4 +1,5 @@
 import { ScrollReveal } from "../../../components/animations/ScrollReveal";
+import { useLanguage } from "../../../context/LanguageContext";
 import type { SiteProfile } from "../../../types/api";
 import styles from "../Home.module.scss";
 
@@ -12,6 +13,8 @@ function buildWhatsAppUrl(number: string): string {
 }
 
 export function ContactSection({ profile }: ContactSectionProps) {
+  const { t } = useLanguage();
+
   const whatsappUrl = profile.whatsapp_number
     ? buildWhatsAppUrl(profile.whatsapp_number)
     : null;
@@ -24,8 +27,7 @@ export function ContactSection({ profile }: ContactSectionProps) {
 
       <ScrollReveal delay={0.12}>
         <p className={styles.contactText}>
-          {profile.contact_message ||
-            "Mi bandeja de entrada siempre está abierta. Contáctame por WhatsApp o correo."}
+          {profile.contact_message || t("home.contactFallback")}
         </p>
       </ScrollReveal>
 
@@ -37,7 +39,7 @@ export function ContactSection({ profile }: ContactSectionProps) {
               href={whatsappUrl}
               target="_blank"
               rel="noreferrer"
-              aria-label="Contactar por WhatsApp"
+              aria-label={`${t("home.whatsapp")}`}
             >
               <svg viewBox="0 0 24 24" aria-hidden="true" className={styles.whatsappIcon}>
                 <path
@@ -49,7 +51,7 @@ export function ContactSection({ profile }: ContactSectionProps) {
                   d="M12 0C5.373 0 0 5.373 0 12c0 2.625.846 5.059 2.284 7.034L.789 23.492a.75.75 0 0 0 .917.917l4.458-1.495A11.945 11.945 0 0 0 12 24c6.627 0 12-5.373 12-12S18.627 0 12 0zm0 21.818a9.818 9.818 0 0 1-5.006-1.37l-.357-.212-2.647.887.887-2.647-.212-.357A9.818 9.818 0 1 1 12 21.818z"
                 />
               </svg>
-              WhatsApp
+              {t("home.whatsapp")}
             </a>
           )}
 

@@ -1,4 +1,5 @@
 import { ScrollReveal } from "../../../components/animations/ScrollReveal";
+import { useLanguage } from "../../../context/LanguageContext";
 import { getMediaUrl } from "../../../services/api";
 import type { Project } from "../../../types/api";
 import { FiExternalLink, FiGithub } from "react-icons/fi";
@@ -9,12 +10,14 @@ interface ProjectsSectionProps {
 }
 
 export function ProjectsSection({ projects }: ProjectsSectionProps) {
+  const { t } = useLanguage();
+
   if (projects.length === 0) return null;
 
   return (
     <section className={`${styles.section} ${styles.projectsSection}`} id="proyectos">
       <ScrollReveal>
-        <h2 className={styles.sectionTitle}>Algunos proyectos que he desarrollado</h2>
+        <h2 className={styles.sectionTitle}>{t("home.projectsTitle")}</h2>
       </ScrollReveal>
 
       <div className={styles.projectsList}>
@@ -39,7 +42,7 @@ export function ProjectsSection({ projects }: ProjectsSectionProps) {
                       <img
                         className={styles.projectImage}
                         src={getMediaUrl(project.preview_image)}
-                        alt={`Preview de ${project.title}`}
+                        alt={`${t("home.projectPreview")} ${project.title}`}
                         loading="lazy"
                       />
                     ) : (
@@ -51,7 +54,9 @@ export function ProjectsSection({ projects }: ProjectsSectionProps) {
                   </div>
 
                   <div className={styles.projectOverlay}>
-                    <span className={styles.projectOverlayLabel}>Proyecto</span>
+                    <span className={styles.projectOverlayLabel}>
+                      {t("home.projectLabel")}
+                    </span>
                     <h3 className={styles.projectOverlayTitle}>{project.title}</h3>
                     <p className={styles.projectOverlayDesc}>{project.description}</p>
 
@@ -85,7 +90,7 @@ export function ProjectsSection({ projects }: ProjectsSectionProps) {
                                 target="_blank"
                                 rel="noreferrer"
                                 className={styles.projectOverlayIconLink}
-                                aria-label={`Repositorio de ${project.title} en GitHub`}
+                                aria-label={`${t("home.projectRepo")} ${project.title} ${t("home.onGithub")}`}
                               >
                                 <FiGithub size={24} strokeWidth={1.75} />
                               </a>
@@ -96,7 +101,7 @@ export function ProjectsSection({ projects }: ProjectsSectionProps) {
                                 target="_blank"
                                 rel="noreferrer"
                                 className={styles.projectOverlayIconLink}
-                                aria-label={`Ver demo de ${project.title}`}
+                                aria-label={`${t("home.projectDemo")} ${project.title}`}
                               >
                                 <FiExternalLink size={24} strokeWidth={1.75} />
                               </a>

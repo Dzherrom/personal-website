@@ -1,4 +1,5 @@
 import { ScrollReveal } from "../../../components/animations/ScrollReveal";
+import { useLanguage } from "../../../context/LanguageContext";
 import { getMediaUrl } from "../../../services/api";
 import type { Client } from "../../../types/api";
 import { FiExternalLink } from "react-icons/fi";
@@ -9,14 +10,14 @@ interface ExperienceSectionProps {
 }
 
 export function ExperienceSection({ clients }: ExperienceSectionProps) {
+  const { t } = useLanguage();
+
   if (clients.length === 0) return null;
 
   return (
     <section className={styles.section} id="experiencia">
       <ScrollReveal>
-        <h2 className={styles.sectionTitle}>
-          Algunos clientes con los que he trabajado
-        </h2>
+        <h2 className={styles.sectionTitle}>{t("home.experienceTitle")}</h2>
       </ScrollReveal>
 
       <div className={styles.experienceList}>
@@ -32,7 +33,7 @@ export function ExperienceSection({ clients }: ExperienceSectionProps) {
               }`}
             >
               <div className={styles.experienceCardContent}>
-                <span className={styles.projectLabel}>Cliente</span>
+                <span className={styles.projectLabel}>{t("home.clientLabel")}</span>
                 <h3 className={styles.projectTitle}>{client.name}</h3>
 
                 {client.description && (
@@ -66,7 +67,7 @@ export function ExperienceSection({ clients }: ExperienceSectionProps) {
                           target="_blank"
                           rel="noreferrer"
                           className={styles.experienceCardIconLink}
-                          aria-label={`Visitar sitio de ${client.name}`}
+                          aria-label={`${t("home.visitClientSite")} ${client.name}`}
                         >
                           <FiExternalLink size={24} strokeWidth={1.75} />
                         </a>
@@ -80,7 +81,7 @@ export function ExperienceSection({ clients }: ExperienceSectionProps) {
                 <div className={styles.experienceCardPreview}>
                   <img
                     src={getMediaUrl(client.preview_image)}
-                    alt={`Preview de ${client.name}`}
+                    alt={`${t("home.clientPreview")} ${client.name}`}
                     loading="lazy"
                   />
                 </div>

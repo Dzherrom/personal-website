@@ -2,6 +2,7 @@ import { motion } from "framer-motion";
 import type { ComponentType } from "react";
 import { FaGithub, FaLinkedin } from "react-icons/fa";
 import { SiCodewars, SiFreelancer } from "react-icons/si";
+import { useLanguage } from "../../../context/LanguageContext";
 import type { SiteProfile } from "../../../types/api";
 import styles from "./SideSocialNav.module.scss";
 
@@ -25,13 +26,14 @@ const ICONS: Array<{
 ];
 
 export function SideSocialNav({ profile }: { profile: SiteProfile }) {
+  const { t } = useLanguage();
   const links = ICONS.map((item) => ({
     ...item,
     href: item.urlKey ? String(profile[item.urlKey] ?? "") : (item.url ?? ""),
   })).filter((link) => link.href);
 
   return (
-    <aside className={styles.sidebar} aria-label="Redes sociales">
+    <aside className={styles.sidebar} aria-label={t("footer.socialNav")}>
       <ul className={styles.iconList}>
         {links.map((link, index) => {
           const Icon = ICON_COMPONENTS[link.id];

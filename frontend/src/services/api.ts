@@ -9,19 +9,36 @@ import type {
 
 const API_BASE = import.meta.env.VITE_API_URL ?? "/api";
 
-/** Convierte URLs de archivos del API a ruta local proxied (/media/...) en desarrollo. */
+function getApiOrigin(): string | null {
+  if (!API_BASE.startsWith("http")) return null;
+
+  try {
+    return new URL(API_BASE).origin;
+  } catch {
+    return null;
+  }
+}
+
+/** Convierte URLs de archivos del API a rutas usables en el frontend. */
 export function getMediaUrl(fileUrl: string): string {
   if (!fileUrl) return "";
+
+  if (fileUrl.startsWith("http://") || fileUrl.startsWith("https://")) {
+    return fileUrl;
+  }
+
+  if (fileUrl.startsWith("/media/")) {
+    const apiOrigin = getApiOrigin();
+    return apiOrigin ? `${apiOrigin}${fileUrl}` : fileUrl;
+  }
 
   try {
     const { pathname } = new URL(fileUrl);
     if (pathname.startsWith("/media/")) {
-      return pathname;
-    }
-  } catch {
-    if (fileUrl.startsWith("/media/")) {
       return fileUrl;
     }
+  } catch {
+    // fileUrl no es una URL absoluta válida
   }
 
   return fileUrl;

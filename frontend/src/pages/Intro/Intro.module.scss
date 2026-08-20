@@ -130,6 +130,18 @@
   font-size: 1.1rem;
 }
 
+.langToggleWrap {
+  position: fixed;
+  top: 0;
+  right: 0;
+  z-index: 10;
+  pointer-events: none;
+
+  button {
+    pointer-events: auto;
+  }
+}
+
 /* Tablet (~820px) */
 @media (max-width: 1024px) {
   .splash {

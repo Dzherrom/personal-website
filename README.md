@@ -109,9 +109,61 @@ cd frontend
 npm run build
 ```
 
+## Despliegue en Netlify (frontend)
+
+El repo incluye `netlify.toml` en la raíz. Netlify detecta automáticamente:
+
+| Setting | Valor |
+|---------|-------|
+| Base directory | `frontend` |
+| Build command | `npm run build` |
+| Publish directory | `frontend/dist` |
+
+### Pasos
+
+1. **Sube el repo a GitHub** (si aún no está al día):
+   ```bash
+   git add .
+   git commit -m "Preparar despliegue Netlify"
+   git push origin main
+   ```
+
+2. **Conecta en [Netlify](https://app.netlify.com/)** → *Add new site* → *Import an existing project* → GitHub → repo `personal-website`.
+
+3. **Variables de entorno** en *Site configuration → Environment variables*:
+   ```
+   VITE_API_URL = https://TU-BACKEND.onrender.com/api
+   ```
+   (Sustituye por la URL real de tu API Django en producción.)
+
+4. **Deploy** — Netlify construye y publica en una URL `*.netlify.app`.
+
+5. **CORS en Django** — en el `.env` del backend de producción:
+   ```
+   CORS_ALLOWED_ORIGINS=https://tu-sitio.netlify.app
+   ALLOWED_HOSTS=tu-backend.onrender.com
+   DEBUG=False
+   ```
+
+### Backend (API)
+
+Netlify solo sirve el frontend estático. El backend Django debe desplegarse aparte (Render, Railway, Fly.io, etc.) con PostgreSQL, `migrate`, `seed_demo` y archivos media.
+
+Sin backend en producción, la intro usa datos fallback y el home mostrará error de perfil.
+
+### Deploy manual (CLI)
+
+```bash
+npm install -g netlify-cli
+cd frontend
+npm run build
+netlify login
+netlify deploy --prod --dir=dist
+```
+
 ## Próximos pasos
 
 - [ ] Personalizar perfil, proyectos y skills en el admin
 - [ ] Añadir imagen de fondo en la intro
-- [ ] Refinar transiciones entre rutas
-- [ ] Desplegar (Netlify/Vercel + Railway/Render)
+- [ ] Desplegar backend Django en Render/Railway
+- [ ] Dominio personalizado en Netlify

@@ -1,18 +1,20 @@
 import { ScrollReveal } from "../../../components/animations/ScrollReveal";
+import { useLanguage } from "../../../context/LanguageContext";
 import { getCvDownloadUrl } from "../../../services/api";
 import type { SiteProfile } from "../../../types/api";
 import styles from "../Home.module.scss";
+
 interface HeroSectionProps {
   profile: SiteProfile;
 }
 
 export function HeroSection({ profile }: HeroSectionProps) {
+  const { t } = useLanguage();
+
   return (
     <section className={styles.hero} id="inicio">
       <ScrollReveal onMount delay={0}>
-        <p className={styles.heroLead}>
-          Hola, como pudiste ver antes, mi nombre es
-        </p>
+        <p className={styles.heroLead}>{t("home.heroLead")}</p>
       </ScrollReveal>
 
       <ScrollReveal onMount delay={0.15}>
@@ -34,7 +36,7 @@ export function HeroSection({ profile }: HeroSectionProps) {
             href={getCvDownloadUrl(profile.cv_file)}
             download
           >
-            Descargar CV
+            {t("home.downloadCv")}
           </a>
         </ScrollReveal>
       )}
