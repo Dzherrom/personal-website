@@ -24,7 +24,7 @@ class Command(BaseCommand):
                 "email": "tu@email.com",
                 "github_url": "https://github.com",
                 "linkedin_url": "https://linkedin.com",
-                "whatsapp_number": "521234567890",
+                "whatsapp_number": "584242739549",
                 "social_links": [
                     {"label": "GitHub", "url": "https://github.com"},
                     {"label": "LinkedIn", "url": "https://linkedin.com"},

@@ -86,6 +86,34 @@ export const SKILL_COLORS: Record<string, string> = {
   "Framer Motion": "#0055FF",
 };
 
+/** URLs oficiales de cada tecnología */
+export const SKILL_URLS: Record<string, string> = {
+  HTML: "https://developer.mozilla.org/en-US/docs/Web/HTML",
+  CSS: "https://developer.mozilla.org/en-US/docs/Web/CSS",
+  JavaScript: "https://developer.mozilla.org/en-US/docs/Web/JavaScript",
+  TypeScript: "https://www.typescriptlang.org/",
+  React: "https://react.dev/",
+  "React Router": "https://reactrouter.com/",
+  "Next.js": "https://nextjs.org/",
+  Tailwind: "https://tailwindcss.com/",
+  SASS: "https://sass-lang.com/",
+  Redux: "https://redux.js.org/",
+  Python: "https://www.python.org/",
+  Django: "https://www.djangoproject.com/",
+  "Django REST": "https://www.django-rest-framework.org/",
+  PostgreSQL: "https://www.postgresql.org/",
+  MySQL: "https://www.mysql.com/",
+  Ruby: "https://www.ruby-lang.org/",
+  "Ruby on Rails": "https://rubyonrails.org/",
+  NPM: "https://www.npmjs.com/",
+  "VS Code": "https://code.visualstudio.com/",
+  "Fly.io": "https://fly.io/",
+  Hostinger: "https://www.hostinger.com/",
+  Netlify: "https://www.netlify.com/",
+  Vercel: "https://vercel.com/",
+  "Framer Motion": "https://www.framer.com/motion/",
+};
+
 /** Skills que muestran badge de texto sobre el icono */
 export const SKILL_BADGES: Record<string, string> = {
   "Django REST": "REST",
