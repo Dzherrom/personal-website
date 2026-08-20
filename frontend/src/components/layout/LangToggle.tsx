@@ -1,3 +1,4 @@
+import { SpainFlag } from "../icons/SpainFlag";
 import { UsaFlag } from "../icons/UsaFlag";
 import { useLanguage } from "../../context/LanguageContext";
 import styles from "./LangToggle.module.scss";
@@ -33,6 +34,8 @@ export function LangToggle({ className }: LangToggleProps) {
   const ariaLabel =
     locale === "es" ? t("lang.switchToEn") : t("lang.switchToEs");
 
+  const FlagIcon = locale === "es" ? UsaFlag : SpainFlag;
+
   return (
     <button
       type="button"
@@ -42,7 +45,7 @@ export function LangToggle({ className }: LangToggleProps) {
     >
       <span className={styles.langToggleBox}>
         <span className={styles.langToggleFlag}>
-          <UsaFlag className={styles.langToggleFlagSvg} />
+          <FlagIcon className={styles.langToggleFlagSvg} />
         </span>
         <span className={styles.langToggleStripe} aria-hidden="true" />
         <svg

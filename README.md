@@ -130,7 +130,18 @@ El repo incluye `netlify.toml` en la raíz. Netlify detecta automáticamente:
 
 2. **Conecta en [Netlify](https://app.netlify.com/)** → *Add new site* → *Import an existing project* → GitHub → repo `personal-website`.
 
-3. **Variables de entorno** en *Site configuration → Environment variables*:
+3. **Build settings** (deben coincidir con `netlify.toml`):
+
+   | Campo | Valor |
+   |-------|-------|
+   | Base directory | `frontend` |
+   | Build command | `npm run build` |
+   | Publish directory | `dist` (relativo al base, **no** `frontend/dist`) |
+   | Functions directory | **Vacío / Not set** |
+
+   > **Importante:** `_redirects` no es un directorio de functions. Los redirects SPA ya están en `netlify.toml`. Si pusiste `frontend/public/_redirects` en Functions directory, bórralo del panel.
+
+4. **Variables de entorno** en *Site configuration → Environment variables*:
    ```
    VITE_API_URL = https://TU-BACKEND.onrender.com/api
    ```

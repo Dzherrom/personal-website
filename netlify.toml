@@ -11,3 +11,6 @@
   from = "/*"
   to = "/index.html"
   status = 200
+
+# No usar Netlify Functions en este proyecto.
+# En el panel de Netlify, deja "Functions directory" vacío (Not set).
