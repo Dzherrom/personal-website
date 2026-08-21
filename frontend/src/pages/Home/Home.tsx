@@ -24,6 +24,7 @@ export function Home() {
   const [projects, setProjects] = useState<Project[]>([]);
   const [skills, setSkills] = useState<Skill[]>([]);
   const [loading, setLoading] = useState(true);
+  const [profileFetchFailed, setProfileFetchFailed] = useState(false);
 
   useEffect(() => {
     getHomeData()
@@ -32,6 +33,7 @@ export function Home() {
         setClients(data.clients);
         setProjects(data.projects);
         setSkills(data.skills);
+        setProfileFetchFailed(data.profileFetchFailed);
       })
       .finally(() => setLoading(false));
   }, []);
@@ -56,9 +58,22 @@ export function Home() {
   }
 
   if (!localizedProfile) {
+    const apiBase = import.meta.env.VITE_API_URL ?? "/api";
+
     return (
       <div className={styles.loading}>
-        {t("home.noProfile")} <code>python manage.py seed_demo</code>.
+        {profileFetchFailed ? (
+          <>
+            <p>{t("home.apiError")}</p>
+            <p>
+              {t("home.apiConfiguredAs")}: <code>{apiBase}</code>
+            </p>
+          </>
+        ) : (
+          <>
+            {t("home.noProfile")} <code>python manage.py seed_demo</code>.
+          </>
+        )}
       </div>
     );
   }

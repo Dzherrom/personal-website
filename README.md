@@ -29,9 +29,29 @@ personal-website/
         └── types/        # Tipos TypeScript
 ```
 
-## Inicio rápido
+## Desarrollo local (rama `dev`)
 
-### 1. Backend
+Desde la raíz del repo:
+
+```powershell
+npm run setup   # primera vez: venv, .env, migrate, seed_demo, admin local
+npm run dev     # abre backend :8000 y frontend :5173 en terminales separadas
+```
+
+| Servicio | URL |
+|----------|-----|
+| Frontend | http://localhost:5173 |
+| API | http://127.0.0.1:8000/api/ |
+| Admin Django | http://127.0.0.1:8000/admin/ |
+
+**Admin local** (tras `npm run setup`): usuario `admin` / contraseña `admin123`  
+(Configurable en `backend/.env` → `DJANGO_ADMIN_*`)
+
+El frontend usa SQLite y proxy Vite (`VITE_API_URL=/api`). No hace falta PostgreSQL en local.
+
+### Setup manual (alternativa)
+
+#### 1. Backend
 
 ```bash
 cd backend
@@ -46,8 +66,7 @@ source venv/bin/activate
 pip install -r requirements.txt
 cp .env.example .env
 python manage.py migrate
-python manage.py seed_demo
-python manage.py createsuperuser
+python manage.py setup_render
 python manage.py runserver
 ```
 
@@ -62,7 +81,7 @@ API disponible en `http://127.0.0.1:8000/api/`
 
 Admin: `http://127.0.0.1:8000/admin/`
 
-### 2. Frontend
+#### 2. Frontend
 
 ```bash
 cd frontend
@@ -71,7 +90,7 @@ cp .env.example .env
 npm run dev
 ```
 
-Frontend en `http://localhost:5173` — el proxy de Vite redirige `/api` al backend.
+Frontend en `http://localhost:5173` — el proxy de Vite redirige `/api` y `/media` al backend.
 
 ## Secciones
 
@@ -168,18 +187,20 @@ El repo incluye `render.yaml`. El build ejecuta automáticamente `migrate` + `se
 2. [dashboard.render.com](https://dashboard.render.com/) → **New** → **Blueprint** → conecta el repo.
 3. Al crear el blueprint, define estas variables:
    ```
-   CORS_ALLOWED_ORIGINS = https://TU-SITIO.netlify.app
+   CORS_ALLOWED_ORIGINS = https://dzherrom.netlify.app
    DJANGO_ADMIN_PASSWORD = Cumana21.*
    ```
    (Usuario admin: `admin` — configurado en `render.yaml`)
 4. Espera el deploy del servicio `portfolio-api`. Copia su URL, p. ej. `https://portfolio-api-xxxx.onrender.com`.
-5. En **Netlify** → *Environment variables*:
+5. En **Netlify** → *Environment variables* (opcional si ya está en `netlify.toml`):
    ```
-   VITE_API_URL = https://portfolio-api-xxxx.onrender.com/api
+   VITE_API_URL = https://portfolio-api-h4fj.onrender.com/api
    ```
-6. **Redeploy** el sitio en Netlify (Deploys → Trigger deploy).
+6. **Redeploy** el sitio en Netlify (Deploys → Trigger deploy → Clear cache).
 
-Comprueba la API en el navegador: `https://portfolio-api-xxxx.onrender.com/api/profile/` debe devolver JSON con `results`.
+Comprueba la API: [portfolio-api-h4fj.onrender.com/api/profile/](https://portfolio-api-h4fj.onrender.com/api/profile/)
+
+Sitio en producción: [dzherrom.netlify.app](https://dzherrom.netlify.app/)
 
 #### Opción B — Ya tienes backend en Render/Railway
 

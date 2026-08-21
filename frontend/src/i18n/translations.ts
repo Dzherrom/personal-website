@@ -12,6 +12,9 @@ const ui = {
     },
     home: {
       noProfile: "No hay perfil activo. Ejecuta",
+      apiError:
+        "No se pudo conectar con la API. Revisa VITE_API_URL en Netlify y CORS en Render, luego redeploy.",
+      apiConfiguredAs: "API configurada como",
       banner: "Sitio desactualizado, nuevo en construcción",
       heroLead: "Hola, como pudiste ver antes, mi nombre es",
       downloadCv: "Descargar CV",
@@ -53,6 +56,9 @@ const ui = {
     },
     home: {
       noProfile: "No active profile. Run",
+      apiError:
+        "Could not connect to the API. Check VITE_API_URL on Netlify and CORS on Render, then redeploy.",
+      apiConfiguredAs: "API configured as",
       banner: "Outdated site, new version under construction",
       heroLead: "Hi, as you saw before, my name is",
       downloadCv: "Download résumé",

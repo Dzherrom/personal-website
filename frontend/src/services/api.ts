@@ -94,15 +94,21 @@ export interface HomeData {
   clients: Client[];
   projects: Project[];
   skills: Skill[];
+  profileFetchFailed: boolean;
 }
 
 export async function getHomeData(): Promise<HomeData> {
+  let profileFetchFailed = false;
+
   const [profile, clients, projects, skills] = await Promise.all([
-    getProfile().catch(() => null),
+    getProfile().catch(() => {
+      profileFetchFailed = true;
+      return null;
+    }),
     getClients().catch(() => []),
     getProjects().catch(() => []),
     getSkills().catch(() => []),
   ]);
 
-  return { profile, clients, projects, skills };
+  return { profile, clients, projects, skills, profileFetchFailed };
 }

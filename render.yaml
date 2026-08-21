@@ -26,7 +26,7 @@ services:
       - key: SERVE_MEDIA
         value: "true"
       - key: CORS_ALLOWED_ORIGINS
-        sync: false
+        value: "https://dzherrom.netlify.app"
       - key: DJANGO_ADMIN_USERNAME
         value: admin
       - key: DJANGO_ADMIN_EMAIL

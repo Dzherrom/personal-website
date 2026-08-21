@@ -5,6 +5,7 @@
 
 [build.environment]
   NODE_VERSION = "20"
+  VITE_API_URL = "https://portfolio-api-h4fj.onrender.com/api"
 
 # React Router — todas las rutas sirven index.html
 [[redirects]]

@@ -1,0 +1,10 @@
+{
+  "name": "personal-website",
+  "private": true,
+  "scripts": {
+    "setup": "powershell -ExecutionPolicy Bypass -File scripts/setup-local.ps1",
+    "dev": "powershell -ExecutionPolicy Bypass -File scripts/dev.ps1",
+    "dev:backend": "cd backend && .\\venv\\Scripts\\python.exe manage.py runserver 127.0.0.1:8000",
+    "dev:frontend": "cd frontend && npm run dev"
+  }
+}
