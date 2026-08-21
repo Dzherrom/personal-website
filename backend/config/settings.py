@@ -11,6 +11,9 @@ load_dotenv()
 
 BASE_DIR = Path(__file__).resolve().parent.parent
 
+IS_RENDER = bool(os.getenv("RENDER"))
+USE_S3_MEDIA = bool(os.getenv("AWS_STORAGE_BUCKET_NAME"))
+
 SECRET_KEY = os.getenv("SECRET_KEY", "django-insecure-dev-only-change-in-production")
 DEBUG = os.getenv("DEBUG", "True").lower() in ("true", "1", "yes")
 ALLOWED_HOSTS = [
@@ -30,6 +33,9 @@ INSTALLED_APPS = [
     "corsheaders",
     "portfolio",
 ]
+
+if USE_S3_MEDIA:
+    INSTALLED_APPS.insert(0, "storages")
 
 MIDDLEWARE = [
     "django.middleware.security.SecurityMiddleware",
@@ -68,14 +74,21 @@ if DATABASE_URL.startswith("postgres"):
     from urllib.parse import urlparse
 
     url = urlparse(DATABASE_URL)
+    db_options: dict[str, str] = {}
+
+    # Render Postgres exige SSL en conexiones externas
+    if IS_RENDER or os.getenv("DATABASE_SSL", "true").lower() in ("true", "1", "yes"):
+        db_options["sslmode"] = "require"
+
     DATABASES = {
         "default": {
             "ENGINE": "django.db.backends.postgresql",
-            "NAME": url.path[1:],
+            "NAME": url.path.lstrip("/"),
             "USER": url.username,
             "PASSWORD": url.password,
             "HOST": url.hostname,
             "PORT": url.port or 5432,
+            **({"OPTIONS": db_options} if db_options else {}),
         }
     }
 else:
@@ -102,7 +115,11 @@ STATIC_URL = "static/"
 STATIC_ROOT = BASE_DIR / "staticfiles"
 STORAGES = {
     "default": {
-        "BACKEND": "django.core.files.storage.FileSystemStorage",
+        "BACKEND": (
+            "storages.backends.s3.S3Storage"
+            if USE_S3_MEDIA
+            else "django.core.files.storage.FileSystemStorage"
+        ),
     },
     "staticfiles": {
         "BACKEND": (
@@ -112,13 +129,28 @@ STORAGES = {
         ),
     },
 }
-MEDIA_URL = "media/"
+MEDIA_URL = "/media/"
 MEDIA_ROOT = BASE_DIR / "media"
 
-SERVE_MEDIA = DEBUG or os.getenv("SERVE_MEDIA", "False").lower() in (
-    "true",
-    "1",
-    "yes",
+if USE_S3_MEDIA:
+    AWS_STORAGE_BUCKET_NAME = os.getenv("AWS_STORAGE_BUCKET_NAME", "")
+    AWS_S3_ACCESS_KEY_ID = os.getenv("AWS_ACCESS_KEY_ID", "")
+    AWS_S3_SECRET_ACCESS_KEY = os.getenv("AWS_SECRET_ACCESS_KEY", "")
+    AWS_S3_REGION_NAME = os.getenv("AWS_S3_REGION_NAME", "auto")
+    AWS_S3_ENDPOINT_URL = os.getenv("AWS_S3_ENDPOINT_URL") or None
+    AWS_S3_CUSTOM_DOMAIN = os.getenv("AWS_S3_CUSTOM_DOMAIN") or None
+    AWS_DEFAULT_ACL = "public-read"
+    AWS_QUERYSTRING_AUTH = False
+    AWS_S3_FILE_OVERWRITE = False
+
+# Servir /media/ localmente solo sin almacenamiento S3
+SERVE_MEDIA = (
+    not USE_S3_MEDIA
+    and (
+        DEBUG
+        or IS_RENDER
+        or os.getenv("SERVE_MEDIA", "False").lower() in ("true", "1", "yes")
+    )
 )
 
 DEFAULT_AUTO_FIELD = "django.db.models.BigAutoField"

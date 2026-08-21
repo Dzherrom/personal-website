@@ -6,8 +6,20 @@
 [build.environment]
   NODE_VERSION = "20"
   VITE_API_URL = "https://portfolio-api-h4fj.onrender.com/api"
+  VITE_SITE_URL = "https://dzherrom.netlify.app"
 
-# React Router — todas las rutas sirven index.html
+# Archivos estáticos en public/ (imágenes, CV) — Netlify los sirve antes del SPA
+[[redirects]]
+  from = "/images/*"
+  to = "/images/:splat"
+  status = 200
+
+[[redirects]]
+  from = "/cvs/*"
+  to = "/cvs/:splat"
+  status = 200
+
+# React Router — rutas de la app
 [[redirects]]
   from = "/*"
   to = "/index.html"

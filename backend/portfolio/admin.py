@@ -18,6 +18,7 @@ class SiteProfileAdmin(admin.ModelAdmin):
                     "location",
                     "email",
                     "cv_file",
+                    "cv_file_url",
                     "is_active",
                 ),
             },
@@ -61,6 +62,7 @@ class ClientAdmin(admin.ModelAdmin):
                     "highlights",
                     "tech_stack",
                     "preview_image",
+                    "preview_image_url",
                     "order",
                 ),
             },
@@ -84,7 +86,7 @@ class ProjectAdmin(admin.ModelAdmin):
         (
             "Proyecto",
             {
-                "fields": ("title", "slug", "description", "highlights", "preview_image", "order", "is_featured", "created_at"),
+                "fields": ("title", "slug", "description", "highlights", "preview_image", "preview_image_url", "order", "is_featured", "created_at"),
             },
         ),
         (

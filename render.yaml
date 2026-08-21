@@ -1,7 +1,3 @@
-databases:
-  - name: portfolio-db
-    plan: free
-
 services:
   - type: web
     name: portfolio-api
@@ -14,9 +10,7 @@ services:
       - key: PYTHON_VERSION
         value: "3.12.7"
       - key: DATABASE_URL
-        fromDatabase:
-          name: portfolio-db
-          property: connectionString
+        sync: false
       - key: SECRET_KEY
         generateValue: true
       - key: DEBUG
@@ -25,7 +19,19 @@ services:
         value: ".onrender.com"
       - key: SERVE_MEDIA
         value: "true"
+      - key: AWS_STORAGE_BUCKET_NAME
+        sync: false
+      - key: AWS_ACCESS_KEY_ID
+        sync: false
+      - key: AWS_SECRET_ACCESS_KEY
+        sync: false
+      - key: AWS_S3_ENDPOINT_URL
+        sync: false
+      - key: AWS_S3_CUSTOM_DOMAIN
+        sync: false
       - key: CORS_ALLOWED_ORIGINS
+        value: "https://dzherrom.netlify.app"
+      - key: SITE_PUBLIC_URL
         value: "https://dzherrom.netlify.app"
       - key: DJANGO_ADMIN_USERNAME
         value: admin

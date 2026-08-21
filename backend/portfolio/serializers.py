@@ -1,5 +1,6 @@
 from rest_framework import serializers
 
+from .media_utils import resolve_file_url, resolve_preview_image
 from .models import Client, ContactMessage, Project, SiteProfile, Skill
 
 
@@ -29,13 +30,11 @@ class SiteProfileSerializer(serializers.ModelSerializer):
         ]
 
     def get_cv_file(self, obj: SiteProfile) -> str:
-        if not obj.cv_file:
-            return ""
-        request = self.context.get("request")
-        url = obj.cv_file.url
-        if request is not None:
-            return request.build_absolute_uri(url)
-        return url
+        return resolve_file_url(
+            obj.cv_file,
+            obj.cv_file_url,
+            self.context.get("request"),
+        )
 
 
 class ClientSerializer(serializers.ModelSerializer):
@@ -57,13 +56,11 @@ class ClientSerializer(serializers.ModelSerializer):
         ]
 
     def get_preview_image(self, obj: Client) -> str:
-        if not obj.preview_image:
-            return ""
-        request = self.context.get("request")
-        url = obj.preview_image.url
-        if request is not None:
-            return request.build_absolute_uri(url)
-        return url
+        return resolve_preview_image(
+            obj.preview_image,
+            obj.preview_image_url,
+            self.context.get("request"),
+        )
 
 
 class ProjectSerializer(serializers.ModelSerializer):
@@ -87,13 +84,11 @@ class ProjectSerializer(serializers.ModelSerializer):
         ]
 
     def get_preview_image(self, obj: Project) -> str:
-        if not obj.preview_image:
-            return ""
-        request = self.context.get("request")
-        url = obj.preview_image.url
-        if request is not None:
-            return request.build_absolute_uri(url)
-        return url
+        return resolve_preview_image(
+            obj.preview_image,
+            obj.preview_image_url,
+            self.context.get("request"),
+        )
 
 
 class SkillSerializer(serializers.ModelSerializer):

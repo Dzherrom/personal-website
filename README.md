@@ -185,13 +185,19 @@ El repo incluye `render.yaml`. El build ejecuta automáticamente `migrate` + `se
 
 1. Push del repo a GitHub.
 2. [dashboard.render.com](https://dashboard.render.com/) → **New** → **Blueprint** → conecta el repo.
-3. Al crear el blueprint, define estas variables:
+3. Al crear o actualizar el servicio, define estas variables en **Render → portfolio-api → Environment**:
+
    ```
+   DATABASE_URL = postgresql://USER:PASSWORD@HOST/NOMBRE_BD
    CORS_ALLOWED_ORIGINS = https://dzherrom.netlify.app
-   DJANGO_ADMIN_PASSWORD = Cumana21.*
+   DJANGO_ADMIN_PASSWORD = tu-contraseña-admin
    ```
-   (Usuario admin: `admin` — configurado en `render.yaml`)
-4. Espera el deploy del servicio `portfolio-api`. Copia su URL, p. ej. `https://portfolio-api-xxxx.onrender.com`.
+
+   Copia `DATABASE_URL` desde tu Postgres en Render → **Connections → External Database URL**.
+
+   > **Importante:** No subas credenciales al repositorio. Configúralas solo en el panel de Render. Si expusiste la contraseña, rótala en Render → Postgres → Security.
+
+4. **Redeploy** `portfolio-api`. El build ejecuta `migrate`, `seed_demo` y crea el admin automáticamente.
 5. En **Netlify** → *Environment variables* (opcional si ya está en `netlify.toml`):
    ```
    VITE_API_URL = https://portfolio-api-h4fj.onrender.com/api
@@ -224,6 +230,81 @@ python manage.py runserver
 ```
 
 Netlify en producción **no** puede usar tu `localhost`; necesitas la opción A o B.
+
+### Imágenes y CV en Netlify (recomendado)
+
+Los archivos viven en el frontend y se sirven desde Netlify. El admin de Django solo guarda **URLs**, no archivos.
+
+#### Estructura de carpetas
+
+```
+frontend/public/
+├── images/
+│   ├── projects/     ← capturas de proyectos
+│   └── clients/      ← capturas de clientes / experiencia
+└── cvs/              ← PDF del CV
+```
+
+#### 1. Añadir archivos al repo
+
+Copia tus imágenes y PDF en esas carpetas, por ejemplo:
+
+- `frontend/public/images/projects/portfolio-personal.png`
+- `frontend/public/images/clients/taskup.png`
+- `frontend/public/cvs/cv-jerome-rojas.pdf`
+
+Haz commit y push a la rama conectada a Netlify.
+
+#### 2. Configurar Netlify
+
+En [app.netlify.com](https://app.netlify.com) → tu sitio → **Site configuration**:
+
+| Campo | Valor |
+|-------|-------|
+| Base directory | `frontend` |
+| Build command | `npm run build` |
+| Publish directory | `frontend/dist` |
+| Functions directory | *(vacío / Not set)* |
+
+Variables de entorno (Build & deploy → Environment):
+
+```
+VITE_API_URL = https://portfolio-api-h4fj.onrender.com/api
+VITE_SITE_URL = https://dzherrom.netlify.app
+```
+
+El archivo `netlify.toml` en la raíz del repo ya define esto; si conectaste el repo, Netlify lo lee automáticamente.
+
+Tras cada push, Netlify hace build y publica `dist/` incluyendo todo lo de `public/`.
+
+Comprueba que un archivo responde **200**, por ejemplo:  
+`https://dzherrom.netlify.app/images/projects/portfolio-personal.png`
+
+#### 3. Configurar el admin de Django (Render)
+
+Entra a [portfolio-api admin](https://portfolio-api-h4fj.onrender.com/admin/).
+
+**No subas archivos** en los campos de imagen/PDF en producción. Déjalos vacíos y usa solo las URLs:
+
+| Modelo | Campo | Ejemplo de URL |
+|--------|-------|----------------|
+| Proyecto | URL de imagen alternativa | `https://dzherrom.netlify.app/images/projects/portfolio-personal.png` |
+| Cliente | URL de imagen alternativa | `https://dzherrom.netlify.app/images/clients/taskup.png` |
+| Perfil | URL del CV | `https://dzherrom.netlify.app/cvs/cv-jerome-rojas.pdf` |
+
+Si ya tenías archivos subidos al backend, **bórralos** del campo de archivo y guarda solo la URL de Netlify.
+
+#### Desarrollo local
+
+- Pon las mismas imágenes en `frontend/public/`.
+- En el admin local usa `http://localhost:5173/images/...` como URL.
+- O sube el archivo directamente al admin (solo funciona en local).
+
+---
+
+### Imágenes en Render (alternativa S3)
+
+Si más adelante prefieres subir desde el admin sin Netlify, configura un bucket S3/R2. Ver variables `AWS_*` en `backend/.env.example`.
 
 ### Backend (referencia de variables)
 

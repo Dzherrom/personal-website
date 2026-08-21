@@ -16,7 +16,11 @@ class SiteProfile(models.Model):
         upload_to="cvs/",
         blank=True,
         validators=[FileExtensionValidator(allowed_extensions=["pdf"])],
-        help_text="CV en PDF. Se muestra como botón de descarga en el home.",
+        help_text="Solo desarrollo local. En producción deja vacío y usa URL del CV.",
+    )
+    cv_file_url = models.URLField(
+        blank=True,
+        help_text="URL pública del CV en Netlify, ej. https://dzherrom.netlify.app/cvs/mi-cv.pdf",
     )
     whatsapp_number = models.CharField(
         max_length=20,
@@ -86,7 +90,11 @@ class Client(models.Model):
         validators=[
             FileExtensionValidator(allowed_extensions=["jpg", "jpeg", "png", "webp"])
         ],
-        help_text="Captura o preview del proyecto. Se muestra a la derecha en la tarjeta.",
+        help_text="Solo desarrollo local. En producción deja vacío y usa URL de imagen.",
+    )
+    preview_image_url = models.URLField(
+        blank=True,
+        help_text="URL en Netlify, ej. https://dzherrom.netlify.app/images/clients/taskup.png",
     )
     website_url = models.URLField(blank=True, help_text="Enlace al sitio del cliente")
     repo_url = models.URLField(blank=True, help_text="Repositorio en GitHub del proyecto")
@@ -116,7 +124,11 @@ class Project(models.Model):
         validators=[
             FileExtensionValidator(allowed_extensions=["jpg", "jpeg", "png", "webp"])
         ],
-        help_text="Captura o preview del proyecto. Se muestra en la tarjeta.",
+        help_text="Solo desarrollo local. En producción deja vacío y usa URL de imagen.",
+    )
+    preview_image_url = models.URLField(
+        blank=True,
+        help_text="URL en Netlify, ej. https://dzherrom.netlify.app/images/projects/portfolio.png",
     )
     demo_url = models.URLField(blank=True)
     repo_url = models.URLField(blank=True)
