@@ -51,7 +51,7 @@ const ui = {
   en: {
     loading: "Loading...",
     intro: {
-      passionate: "I'm passionate about",
+      passionate: "I'm a passionate",
       cta: "Let's go!",
     },
     home: {
@@ -98,7 +98,7 @@ const ui = {
 const contentEn = {
   profile: {
     tagline: "A developer who loves building solutions for the web.",
-    bio: "Computer engineer specialized in building (and occasionally designing) exceptional digital experiences. Currently based in Mexico. I've been in frontend since 2020.",
+    bio: "Computer engineer specialized in building (and occasionally designing) exceptional digital experiences. I currently live in Venezuela. I've been in frontend since 2020.",
     skills_note: "*Currently learning Next.js.",
     contact_title: "What are you waiting for?",
     contact_message:
