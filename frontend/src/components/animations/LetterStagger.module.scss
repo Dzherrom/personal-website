@@ -16,10 +16,25 @@
   overflow: hidden;
 }
 
+/* En PC el nombre va en una sola línea; el corte tras "-" solo aplica en móvil */
+.lineBreakHyphen {
+  display: none;
+}
+
 .letter {
   display: inline-block;
   flex-shrink: 0;
   overflow: visible;
   line-height: 1.15;
   will-change: transform, opacity;
+}
+
+@media (max-width: 480px) {
+  .lineBreakHyphen {
+    display: block;
+    flex-basis: 100%;
+    width: 0;
+    height: 0;
+    overflow: hidden;
+  }
 }

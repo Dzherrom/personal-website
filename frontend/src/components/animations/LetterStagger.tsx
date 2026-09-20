@@ -43,11 +43,21 @@ export function LetterStagger({
           </motion.span>,
         ];
 
-        if (wrapAtSpaces && (letter === " " || letter === "-")) {
+        if (wrapAtSpaces && letter === " ") {
           nodes.push(
             <span
               key={`break-${index}`}
               className={styles.lineBreak}
+              aria-hidden="true"
+            />,
+          );
+        }
+
+        if (wrapAtSpaces && letter === "-") {
+          nodes.push(
+            <span
+              key={`break-hyphen-${index}`}
+              className={styles.lineBreakHyphen}
               aria-hidden="true"
             />,
           );
