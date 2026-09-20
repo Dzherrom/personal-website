@@ -43,7 +43,7 @@ export function LetterStagger({
           </motion.span>,
         ];
 
-        if (wrapAtSpaces && letter === " ") {
+        if (wrapAtSpaces && (letter === " " || letter === "-")) {
           nodes.push(
             <span
               key={`break-${index}`}

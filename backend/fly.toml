@@ -1,0 +1,52 @@
+# Fly.io — API Django always-on (sin sleep de 15 min de Render).
+# Despliega desde /backend: fly launch --copy-config  &&  fly deploy
+#
+# App pública: https://dzherrom-api.fly.dev
+# Si el nombre está ocupado, cámbialo aquí y en ALLOWED_HOSTS / CSRF / Netlify.
+
+app = "dzherrom-api"
+primary_region = "qro"
+
+[build]
+  dockerfile = "Dockerfile"
+
+[deploy]
+  release_command = "python manage.py migrate --noinput"
+
+[env]
+  DEBUG = "false"
+  PORT = "8080"
+  ALLOWED_HOSTS = "dzherrom-api.fly.dev,.fly.dev"
+  CSRF_TRUSTED_ORIGINS = "https://dzherrom-api.fly.dev"
+  CORS_ALLOWED_ORIGINS = "https://dzherrom.netlify.app"
+  SITE_PUBLIC_URL = "https://dzherrom.netlify.app"
+  DATABASE_SSL = "true"
+  DJANGO_ADMIN_USERNAME = "admin"
+  DJANGO_ADMIN_EMAIL = "admin@example.com"
+
+[http_service]
+  internal_port = 8080
+  force_https = true
+  auto_stop_machines = "off"
+  auto_start_machines = true
+  min_machines_running = 1
+  processes = ["app"]
+
+  [http_service.concurrency]
+    type = "requests"
+    soft_limit = 25
+    hard_limit = 50
+
+  [[http_service.checks]]
+    interval = "30s"
+    timeout = "5s"
+    grace_period = "20s"
+    method = "GET"
+    path = "/healthz/"
+
+[[vm]]
+  size = "shared-cpu-1x"
+  memory = "512mb"
+
+kill_signal = "SIGTERM"
+kill_timeout = "30s"

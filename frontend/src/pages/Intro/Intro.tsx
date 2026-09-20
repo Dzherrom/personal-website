@@ -119,18 +119,18 @@ export function Intro() {
             />
           </span>
         </motion.p>
-
-        <motion.div
-          className={styles.ctaWrapper}
-          initial={{ opacity: 0, y: 30 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ delay: 2, duration: 0.5 }}
-        >
-          <Link to="/home" className={styles.cta}>
-            {t("intro.cta")}
-          </Link>
-        </motion.div>
       </div>
+
+      <motion.div
+        className={styles.ctaWrapper}
+        initial={{ opacity: 0 }}
+        animate={{ opacity: 1 }}
+        transition={{ delay: 2, duration: 0.5 }}
+      >
+        <Link to="/home" className={styles.cta}>
+          {t("intro.cta")}
+        </Link>
+      </motion.div>
     </section>
   );
 }
