@@ -1,6 +1,6 @@
 # Portfolio Personal
 
-Monorepo con **Django REST Framework** (backend) y **React + Vite + TypeScript** (frontend), inspirado en las animaciones del [portfolio de Anthony Rosman](https://portfolioanthonyrosman.netlify.app).
+Monorepo con **Django REST Framework** (backend) y **React + Vite + TypeScript** (frontend).
 
 ## Stack
 
