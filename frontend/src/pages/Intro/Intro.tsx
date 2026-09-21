@@ -72,6 +72,9 @@ export function Intro() {
   }
 
   const greetingDelay = localizedProfile.intro_greeting.length * 0.02 + 0.3;
+  const introName = localizedProfile.intro_name
+    .replace(/\s*-\s*/g, "-")
+    .replace(/\s+/g, "-");
 
   return (
     <section className={styles.splash}>
@@ -94,10 +97,10 @@ export function Intro() {
         />
         <LetterStagger
           key={`${locale}-name`}
-          text={localizedProfile.intro_name}
+          text={introName}
           className={styles.name}
           delayOffset={greetingDelay}
-          wrapAtSpaces
+          wrapAtHyphens
         />
 
         <motion.p

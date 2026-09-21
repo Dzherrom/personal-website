@@ -8,6 +8,8 @@ interface LetterStaggerProps {
   delayOffset?: number;
   /** Fuerza salto de línea después de cada espacio (útil en nombres largos) */
   wrapAtSpaces?: boolean;
+  /** En móvil, parte el nombre tras el guion; en PC no afecta */
+  wrapAtHyphens?: boolean;
 }
 
 export function LetterStagger({
@@ -15,6 +17,7 @@ export function LetterStagger({
   className = "",
   delayOffset = 0,
   wrapAtSpaces = false,
+  wrapAtHyphens = false,
 }: LetterStaggerProps) {
   const reducedMotion = useReducedMotion();
   const letters = text.split("");
@@ -53,7 +56,7 @@ export function LetterStagger({
           );
         }
 
-        if (wrapAtSpaces && letter === "-") {
+        if (wrapAtHyphens && letter === "-") {
           nodes.push(
             <span
               key={`break-hyphen-${index}`}
